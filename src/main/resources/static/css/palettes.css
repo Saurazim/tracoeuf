@@ -1,0 +1,10 @@
+input.disabled{
+    pointer-events: none;
+    cursor: default;
+    opacity: 75%;
+}
+
+table{
+    table-layout: fixed;
+    width: 100%;
+}

@@ -1,0 +1,79 @@
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+form
+{
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+[class*="nb_alveole"], [class*="type_palette"]
+{
+    flex-direction: column;
+}
+
+/*select, input#autre_fournisseur
+{
+    margin: 20px;
+}*/
+
+/*config du tableau en bas de page*/
+table
+{
+    table-layout: fixed;
+    width: 100%;
+    border: 3px solid purple;
+    border-collapse: collapse;
+}
+table.padding th,table.padding td
+{
+    padding-block: 10px
+}
+th
+{
+    background-color: black;
+    color: white;
+}
+td
+{
+    text-align: center;
+}
+tr:nth-child(2n)
+{
+    background-color: #e0e0e0;
+}
+
+tr:nth-child(2n+1)
+{
+    background-color: #ffffff;
+}
+
+
+input[type="radio"]
+{
+    width: 15px;
+    height: 15px;
+}
+
+.disableDiv
+{
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.displayNone
+{
+    display: none;
+}
+
+.hidden
+{
+    visibility: hidden;
+}
+
+

@@ -1,0 +1,192 @@
+input[type="text"], input[type="number"], input[type="date"]
+{
+    margin: 5px;
+}
+
+.cachée
+{
+    visibility: hidden;
+}
+
+
+form .erreur
+{
+    color: red;
+}
+
+form .succes
+{
+    color: #009900;
+}
+
+.flex-container{
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly
+}
+
+
+/*{
+    border: 1px solid red;
+    justify-content: space-around;
+}*/
+
+.flex-container .box
+{
+    /*! background-color: #f1f1f1; */
+    width: 100%;
+    margin : 10px;
+    flex-direction: column;
+    text-align: -moz-center;
+    /*! flex-grow: 2 1 0 */
+}
+
+section{
+    height: 100%;
+    /*background-color: dodgerblue;*/
+}
+
+legend
+{
+    font-size : 25px;
+}
+
+select, input[type="date"],input[type="text"],input[type="number"]{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid #C2C2C2;
+	box-shadow: 1px 1px 4px #EBEBEB;
+	-moz-box-shadow: 1px 1px 4px #EBEBEB;
+	-webkit-box-shadow: 1px 1px 4px #EBEBEB;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	padding: 7px;
+	outline: none;
+}
+
+
+.grid
+{
+    display: grid;
+}
+
+.categ
+{
+    grid-template-columns: auto auto auto auto;
+    min-width: 150px;
+    min-height: 100px;
+}
+
+.twocolumn
+{
+    grid-template-columns:  auto auto;
+}
+
+.fourcolumn
+{
+    grid-template-columns: auto auto auto auto;
+}
+
+.fivecolumn
+{
+    grid-template-columns: auto auto auto auto auto;
+}
+
+form
+{
+    grid-template-columns: auto auto auto auto auto auto auto; 
+}
+
+form fieldset{
+    padding : 10px
+}
+
+input#poidsPalette
+{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+input#poidsPalette ~ span
+{
+    grid-row-start: 4;
+}
+
+
+
+.firstRow
+{
+    grid-row-start: 1;
+}
+
+.secondRow
+{
+    grid-row-start: 2;
+}
+
+.thirdRow
+{
+    grid-row-start: 3;
+}
+
+.fourthRow
+{
+    grid-row-start: 4;
+}
+
+.fifthRow
+{
+    grid-row-start: 5;
+}
+
+.firstColumn
+{
+    grid-Column-start: 1;
+}
+
+.secondColumn
+{
+    grid-Column-start: 2;
+}
+
+.thirdColumn
+{
+    grid-Column-start: 3;
+}
+
+.fourthColumn
+{
+    grid-Column-start: 4;
+}
+
+.fifthColumn
+{
+    grid-Column-start: 5;
+}
+
+table#viewPalettes input
+{
+    max-width: 100px;
+}
+
+#idColumn
+{
+    width: 30px;
+}
+
+.grid
+{
+    display: grid;
+    justify-content: space-evenly;
+}
+
+.secondRow
+{
+    grid-row-start: 2;
+}
+
+.sevenColumn{
+    grid-template-columns: auto auto auto auto auto auto auto; 
+}

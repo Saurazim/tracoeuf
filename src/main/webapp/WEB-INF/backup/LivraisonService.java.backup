@@ -1,0 +1,401 @@
+package com.blanchard.ovobio.tracoeuf.service;
+
+import com.blanchard.ovobio.tracoeuf.bo.TareBo;
+import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.dao.CategorieDao;
+import com.blanchard.ovobio.tracoeuf.dao.FournisseurDao;
+import com.blanchard.ovobio.tracoeuf.dao.LivraisonDao;
+import com.blanchard.ovobio.tracoeuf.dao.LivraisonPaletteDao;
+import com.blanchard.ovobio.tracoeuf.dto.LivraisonDto;
+import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
+import com.blanchard.ovobio.tracoeuf.exceptions.SubAboveZeroFalseException;
+import com.blanchard.ovobio.tracoeuf.model.Categorie;
+import com.blanchard.ovobio.tracoeuf.model.Fournisseur;
+import com.blanchard.ovobio.tracoeuf.model.Livraison;
+import com.blanchard.ovobio.tracoeuf.model.LivraisonPalette;
+import com.blanchard.ovobio.tracoeuf.util.CodeLivUtil;
+import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
+
+import com.blanchard.ovobio.tracoeuf.util.MathsUtil;
+import io.swagger.models.auth.In;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+@Service
+public class LivraisonService {
+    @Autowired
+    LivraisonDao livraisonDao;
+
+    @Autowired
+    LivraisonPaletteService livraisonPaletteService;
+
+    @Autowired
+    FournisseurService fournisseurService;
+
+    @Autowired
+    CategorieService categorieService;
+
+    private static final String CACHE_NAME_LIVRAISON = "livraisons";
+
+    private String resultat;
+    private Map<String,String> erreurs = new HashMap<>();
+    private List<String> fournisseurList = new ArrayList<>();
+
+    public String getResultat() {
+        return resultat;
+    }
+
+    private void setResultat(String resultat) {
+        this.resultat = resultat;
+    }
+
+    public Map<String, String> getErreurs() {
+        return erreurs;
+    }
+
+    private void setErreurs(String champ, String message) {
+        erreurs.put(champ, message);
+    }
+
+    //----------------------------------------------------
+
+    /**
+     * appel des méthodes du dao
+     */
+
+    public List<Livraison> retourListLivraison(){
+        return livraisonDao.findAllByOrderByDateDesc();
+    }
+
+    public int compteLivraisons(LocalDate localDate, Fournisseur fournisseur, Categorie categorie){
+        return livraisonDao.countAllByDateAndFournisseurAndCategorie(localDate,fournisseur,categorie);
+    }
+
+    public void saveAll(List<Livraison> livraisons){
+        livraisonDao.saveAll(livraisons);
+    }
+
+    public List<Livraison> findAll(){
+        return livraisonDao.findAll();
+    }
+    //---------------------------------------------------------
+
+    /**
+     * sauve les données de livraison en bdd
+     * @param livraisonForm le formulaire contenant les dto
+     */
+    public void saveLivraison(LivraisonForm livraisonForm){
+        Livraison livraison = new Livraison();
+        List<List<LivraisonDto>> listOfList = new ArrayList<>();
+        List<Livraison> livraisons = new ArrayList<>();
+        List<LivraisonPalette> palettes = new ArrayList<>();
+        //tri de la liste
+        listOfList.addAll(triDto(livraisonForm.getList()));
+        //création des livraisons
+        for (List<LivraisonDto> list : listOfList){
+            livraisons.add(newLivraison(list));
+        }
+
+        //lie les palettes à la livraison
+        //uni-directionnel
+        for (Livraison livraison1 : livraisons){
+            palettes.addAll(livraison1.getPalettes());
+        }
+        //si aucun message d'erreur, svg en bdd, sinon retour d'erreur
+        if (erreurs.isEmpty()){
+            resultat = "Succès";
+            saveAll(livraisons);
+            livraisonPaletteService.saveAll(palettes);
+        } else {
+            resultat = "echec";
+        }
+    }
+
+    /**
+     * définit les correspondances entre les données dans les listes de dto et l'objet livraison
+     * le dto témoin sert de repère pour les informations récurrentes
+     * @param list dtos triés par date, fournisseur et catégorie
+     * @return un objet livraison
+     */
+    private Livraison newLivraison(List<LivraisonDto> list){
+        //initialisation des variables livraison
+        Livraison livraison = new Livraison();
+        //dto témoin
+        LivraisonDto dtoTemoin = list.get(0);
+        String date = dtoTemoin.getDate();
+        String idFournisseurToString = dtoTemoin.getIdFournisseur();
+        String autreFournisseur = dtoTemoin.getAutreFournisseur();
+        int idCateg = dtoTemoin.getIdCategorie();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.MIN;
+
+        //vérifie la validité date
+        try {
+            Validation.checkDate(date, ConstantesUtil.getProperty(Constantes.EXC_DATE_VIDE), ConstantesUtil.getProperty(Constantes.EXC_DATE_FORMAT));
+            localDate = LocalDate.parse(date, formatter);
+        }catch (Exception e){
+            erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_DATE), e.getMessage());
+        }
+        livraison.setDate(localDate);
+
+        Fournisseur fournisseur = new Fournisseur();
+
+        // vérifie la valeur fournisseur
+        if (ConstantesUtil.getProperty(Constantes.ZERO).equals(idFournisseurToString)){
+            try{
+                Validation.checkVideString(autreFournisseur,ConstantesUtil.getProperty(Constantes.EXC_FOURNISSEUR));
+            }catch (Exception e){
+                erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR), e.getMessage());
+            }
+            fournisseur = fournisseurService.getByNom(autreFournisseur);
+            if (fournisseur == null){
+                fournisseur = new Fournisseur();
+                fournisseur.setNom(autreFournisseur);
+                fournisseur.setCode(fournisseurService.setCodeByNom(autreFournisseur));
+                fournisseurService.save(fournisseur);
+            }
+        } else {
+            int idFournisseur = Integer.parseInt(idFournisseurToString);
+            //appel en bdd fournisseur
+            fournisseur = fournisseurService.getById(idFournisseur);
+        }
+
+        livraison.setFournisseur(fournisseur);
+
+
+        //categorie
+
+        try {
+            Validation.checkInt(idCateg, ConstantesUtil.getProperty(Constantes.EXC_CATEGORIE));
+        }catch (Exception e){
+            erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_CATEGORIE), e.getMessage());
+        }
+        //appel en bdd categ
+        Categorie categorie = new Categorie();
+        categorie = categorieService.getById(idCateg);
+        livraison.setCategorie(categorie);
+
+        //palettes et poids
+        Integer poidsTotal = 0;
+        Integer compte = 0;
+        for(LivraisonDto dto : list){
+            LivraisonPalette palette = newPalette(dto);
+            palette.setCode(compte.toString());
+            livraison.addtoPalettes(palette);
+            if (palette.getNet()!=null)
+                poidsTotal += palette.getNet();
+            compte++;
+        }
+
+        livraison.setNetTotal(poidsTotal);
+
+        //set prefixe
+        //code sous forme RFFFCCC##
+        StringBuilder codePrefixe  = new StringBuilder();
+        codePrefixe.append(ConstantesUtil.getProperty(Constantes.CODE_PREFIXE));//R
+        codePrefixe.append(fournisseur.getCode());//FFF
+        codePrefixe.append(categorie.getType());//CCC
+        codePrefixe.append(compteLivraisons(localDate,fournisseur,categorie));//##
+
+        livraison.setPrefixCode(codePrefixe.toString());
+        StringBuilder codePalette = new StringBuilder();
+
+        for(LivraisonPalette palette : livraison.getPalettes()){
+            codePalette = new StringBuilder(livraison.getPrefixCode() + palette.getCode());
+            palette.setCode(codePalette.toString());
+        }
+
+        return livraison;
+    }
+
+    /**
+     * Définit les correspondances de donnée entre le dto et l'objet livraisonPalette
+     * @param livraisonDto le dto
+     * @return une palette
+     */
+    private LivraisonPalette newPalette(LivraisonDto livraisonDto){
+        //Initialisation des variables palette
+
+        LivraisonPalette palette = new LivraisonPalette();
+        Integer poids = livraisonDto.getPoidsPalette();
+        Boolean typePoids = livraisonDto.getTypePoids();
+        int poidsFinal;
+
+        Integer nbAlveole = livraisonDto.getTareNbAlveole();
+        String typePalette = livraisonDto.getTareTypePalette();
+        Boolean checkTare = livraisonDto.getCheckTare();
+        Integer tare = livraisonDto.getNbTare();
+
+        TareBo tareBo = new TareBo(nbAlveole,typePalette,tare,checkTare);
+
+        //check poids et tare avant condition palette
+
+        poidsFinal = checkPoidsFinal(poids, typePoids, tareBo);
+
+        if (poidsFinal !=0 ){
+                //si le poids est net
+                if (typePoids) {
+                    palette.setNet(poidsFinal);
+                } else {//si le poids est brut
+                    palette.setBrut(poids);
+                    palette.setTarePal(tareBo.getTareFinal());
+                    palette.setNet(poidsFinal);
+                }
+        }
+
+        return palette;
+    }
+
+    /**
+     * vérifie la forme et la validité du poids
+     * @param poids renseigné
+     * @param typePoids true si net
+     * @param tareBo BO contenant les infos de tare
+     * @return un poids ou 0
+     */
+    private int checkPoidsFinal(Integer poids, Boolean typePoids, TareBo tareBo){
+        //initialisation des variables
+        int poidsFinal =0;
+        boolean poidsValide=false;
+        //vérification NULL
+        try {
+            poidsValide= Validation.checkPoids(poids, ConstantesUtil.getProperty(Constantes.EXC_POIDS_VIDE), ConstantesUtil.getProperty(Constantes.EXC_POIDS_NON_INT));
+        }catch (Exception e){
+            erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_POIDS),ConstantesUtil.getProperty(Constantes.EXC_POIDS_VIDE));
+        }
+        //traitement poids si valide
+        if (poidsValide){
+            if (typePoids.equals(ConstantesUtil.getPropertyToBool(Constantes.TRUE))){
+                poidsFinal = poids;
+            } else {
+                try{
+                    Validation.checkTare(tareBo);
+                    poidsFinal= MathsUtil.subAboveZero(poids,tareBo.getTareFinal());
+                } catch(SubAboveZeroFalseException e){
+                    //message poids < 0
+                    erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_TARE_NB),e.getMessage());
+                } catch (Exception e){
+                    //message chp vide
+                    erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_TARE_NB),ConstantesUtil.getProperty(Constantes.EXC_TARE_VIDE));
+                }
+            }
+        }
+
+        return poidsFinal;
+    }
+
+
+    /**
+     * tri les dtos par date
+     * @param list de dtos
+     * @return une liste contenant des listes de dto à date identidque
+     */
+    private List<List<LivraisonDto>> triDtoDates(List<LivraisonDto> list){
+        List<List<LivraisonDto>> listOfList = new ArrayList<>();
+        List<LocalDate> dates = new ArrayList<>();
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        for (LivraisonDto dto : list){
+            int indexDate;
+            LocalDate dtoDate = LocalDate.parse(dto.getDate());
+            indexDate = dates.indexOf(dtoDate);
+            if (indexDate>=ConstantesUtil.getPropertyToInt(Constantes.ZERO)){
+                listOfList.get(indexDate).add(dto);
+            } else {
+                dates.add(dtoDate);
+                List<LivraisonDto> newDates = new ArrayList<>();
+                newDates.add(dto);
+                listOfList.add(newDates);
+
+            }
+        }
+        return listOfList;
+   }
+
+    /**
+     * tri les dtos par fournisseur
+     * @param list de dtos
+     * @return une liste contenant des listes de dto à fournisseur identidque
+     */
+   private List<List<LivraisonDto>> triDtoFournisseur(List<LivraisonDto> list){
+        List<List<LivraisonDto>> listOfList = new ArrayList<>();
+        List<String> listFournisseur = new ArrayList<>();
+        for (LivraisonDto dto : list)
+        {
+            int[] indexInt = new int[2];
+            if (ConstantesUtil.getProperty(Constantes.ZERO).equals(dto.getIdFournisseur())){
+                indexInt[0] = listFournisseur.indexOf(dto.getAutreFournisseur());
+                indexInt[1] = 0;
+            } else {
+                indexInt[0] = listFournisseur.indexOf(dto.getIdFournisseur());
+                indexInt[1] = 1;
+            }
+            if(indexInt[0]>=ConstantesUtil.getPropertyToInt(Constantes.ZERO)){
+                listOfList.get(indexInt[0]).add(dto);
+            } else {
+                if (indexInt[1]!=0){
+                    listFournisseur.add(dto.getIdFournisseur());
+                } else {
+                    listFournisseur.add(dto.getAutreFournisseur());
+                }
+                List<LivraisonDto> newFournisseur = new ArrayList<>();
+                newFournisseur.add(dto);
+                listOfList.add(newFournisseur);
+            }
+        }
+        return listOfList;
+   }
+
+    /**
+     * tri les dtos par catégorie
+     * @param list de dtos
+     * @return une liste contenant des listes de dto à catégorie identidque
+     */
+    private List<List<LivraisonDto>> triDtoCategorie(List<LivraisonDto> list){
+        List<List<LivraisonDto>> listOfList = new ArrayList<>();
+        List<Integer> categ = new ArrayList<>();
+        for(LivraisonDto dto : list){
+            int indexCateg = categ.indexOf(dto.getIdCategorie());
+            if (indexCateg>=ConstantesUtil.getPropertyToInt(Constantes.ZERO)){
+                listOfList.get(indexCateg).add(dto);
+            } else {
+                categ.add(dto.getIdCategorie());
+                List<LivraisonDto> newCateg = new ArrayList<>();
+                newCateg.add(dto);
+                listOfList.add(newCateg);
+            }
+        }
+        return listOfList;
+    }
+
+    /**
+     * tri les dtos par caractéristiques multiples.
+     * @param list de dtos
+     * @return une liste contenant des listes de dtos à caractéristiques identiques
+     */
+    private List<List<LivraisonDto>> triDto(List<LivraisonDto> list){
+        List<List<LivraisonDto>> listDate = new ArrayList<>();
+        List<List<LivraisonDto>> listFournisseur = new ArrayList<>();
+        List<List<LivraisonDto>> listFinal = new ArrayList<>();
+        //tri par date
+        listDate.addAll(triDtoDates(list));
+        //tri par fournisseur
+        for (List<LivraisonDto> listIn : listDate){
+            listFournisseur.addAll(triDtoFournisseur(listIn));
+        }
+        //tri par catégorie
+        for (List<LivraisonDto> listIn : listFournisseur){
+            listFinal.addAll(triDtoCategorie(listIn));
+        }
+        return listFinal;
+    }
+
+
+}

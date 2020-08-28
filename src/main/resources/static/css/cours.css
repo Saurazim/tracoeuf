@@ -1,0 +1,63 @@
+/*sélecteur de la balise*/
+balise
+{
+    attribute:value;
+}
+
+/* sélecteur de balises multiples */
+balise1, balise2
+{
+    attribute:value;
+}
+
+/*sélecteur des attributs /class/ ou /id/ */
+.class
+{
+    attribute:value;
+}
+
+#id
+{
+    attribute:value;
+}
+
+/* sélecteur universel*/
+*
+{
+    attribute:value;
+}
+
+/*sélecteur d'une balise imbriquée dans d'autres
+ici, touche la balise2 imbriquée dans une balise1*/
+balise1 balise2
+{
+    attribute:value;
+}
+
+/*sélecteur d'une balise suivant une autre
+ici, touche la première balise2 après une balise1*/
+balise1 + balise2
+{
+    attribute:value;
+
+}
+
+/*sélecteur d'une balise avec un attribut donné*/
+balise[attribut]
+{
+    attribute:value;
+}
+
+/*sélecteur d'une balise avec attribut qui a une valeur donnée*/
+balise[attribut="valeur"]
+{
+    attribute:value;
+
+}
+
+/* sélecteur d'une balise avec attribut qui 
+contient des éléments donnés dans sa valeur*/
+balise[attribut*="valeur"]
+{
+    attribute:value;
+}
