@@ -9,8 +9,8 @@ import javax.persistence.*;
  * fournisseur d'oeufs
  */
 @Entity
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cacheable
+//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Fournisseur {
 
     @Id

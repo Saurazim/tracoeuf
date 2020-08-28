@@ -8,8 +8,8 @@ import javax.persistence.*;
  * catégorie d'oeuf
  */
 @Entity
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+//@Cacheable
+//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Categorie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

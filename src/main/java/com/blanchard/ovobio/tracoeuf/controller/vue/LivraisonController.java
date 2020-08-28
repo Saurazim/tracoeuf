@@ -39,52 +39,10 @@ public class LivraisonController {
     CategorieService categorieService;
 
     private static final String URL_LIVRAISON = "livraison";
-    public static final String LISTLIVRAISON = "listBean";
-    public static final String SD_FORMAT = "sdf";
     public static final String ATT_FORM = "form";
-    public static final String ATT_LIVRAISON = "livraison";
-    public static final String ATT_LIVRAISON_LIST = "livraisons";
-    public static final String ATT_LIVRAISON_DTO = "LivraisonDto";
-    public static final String ATT_LIVRAISON_FORM = "livraisonForm";
+    public static final String ATT_DTO = "dto";
     public static final String ATT_FOURNISSEURS = "fournisseurs";
     public static final String ATT_CATEGORIES = "categories";
-
-
-    /**
-     * return view by get method
-     * @param model à remplir
-     * @return view
-     */
-//    @GetMapping(URL_LIVRAISON)
-//    public String livraison(Model model)
-//    {
-//        model.addAllAttributes(initVue());
-//
-//        LivraisonDto livraisonDto = new LivraisonDto();
-//        LivraisonForm livraisonForm = new LivraisonForm();
-//        livraisonForm.getList().add(livraisonDto);
-//        model.addAttribute(ATT_LIVRAISON_FORM, livraisonForm);
-//
-//        return ConstantesUtil.getProperty(Constantes.LIVRAISON_JSP);
-//    }
-
-    /**
-     * Traitement des informations du formulaire
-     * @param livraisonForm Objet contenant les différents DTO représentant les palettes arrivées
-     * @param model à remplir
-     * @return view
-     */
-//    @PostMapping(URL_LIVRAISON)
-//    public String doPost(@ModelAttribute LivraisonForm livraisonForm, Model model) {
-//
-//        livraisonService.saveLivraison(livraisonForm);
-//
-//        model.addAllAttributes(initVue());
-//
-//        model.addAttribute(ATT_FORM, livraisonService);
-//        model.addAttribute(ATT_LIVRAISON_FORM, livraisonForm);
-//        return ConstantesUtil.getProperty(Constantes.LIVRAISON_JSP);
-//    }
 
     /**
      * Initialise les attributs récurrents
@@ -108,7 +66,7 @@ public class LivraisonController {
     public String livraisonView(Model model){
         model.addAllAttributes(initVue());
         LivraisonDto dto = new LivraisonDto();
-        model.addAttribute("dto", dto);
+        model.addAttribute(ATT_DTO, dto);
         return "1_livraison";//ConstantesUtil.getProperty(Constantes.LIVRAISON_JSP);
     }
 

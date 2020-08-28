@@ -19,8 +19,8 @@ import java.util.List;
  * une livraison est liée à une catégorie et un fournisseur
  */
 @Entity
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cacheable
+//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Livraison {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
