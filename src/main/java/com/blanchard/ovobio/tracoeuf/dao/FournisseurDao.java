@@ -15,7 +15,6 @@ import java.util.List;
  */
 @Repository
 public interface FournisseurDao extends JpaRepository<Fournisseur, Integer> {
-    Fournisseur findById(int id);
     Fournisseur findByNom(String nom);
     List<Fournisseur> findAllByOrderByIdDesc();
     List<Fournisseur> findAllByOrderByIdAsc();

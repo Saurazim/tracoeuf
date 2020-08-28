@@ -2,6 +2,8 @@ package com.blanchard.ovobio.tracoeuf.service;
 
 import com.blanchard.ovobio.tracoeuf.bo.TareBo;
 import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
+import com.blanchard.ovobio.tracoeuf.exceptions.IntExpectedException;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import com.blanchard.ovobio.tracoeuf.util.FormUtil;
 
@@ -23,7 +25,7 @@ public interface Validation {
 
     static void checkDate(String champDate, String exceptionVide, String ExceptionFormat) throws Exception{
         if (FormUtil.isNull(champDate)){
-            throw new Exception(exceptionVide);
+            throw new ChampVideException(champDate);
         } else {
             if (!champDate.matches("([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")){
                 throw new Exception(ExceptionFormat);
@@ -40,7 +42,7 @@ public interface Validation {
     static void checkTare(TareBo tareBo) throws Exception{
         int intTare = 10;
         if (tareBo.getCheckTare()){
-            checkInt(tareBo.getTare(), ConstantesUtil.getProperty(Constantes.EXC_TARE_VIDE));
+            checkInt(tareBo.getTare().toString());
             intTare = tareBo.getTare();
         }else{
             intTare = getTareBySC(tareBo.getTareNbAlveole(), tareBo.getTareTypePalette());
@@ -89,8 +91,14 @@ public interface Validation {
         return tare;
     }
 
-    static void checkInt(Integer champ, String exceptionVide) throws Exception {
+    static void checkInt(String champ) throws ChampVideException, IntExpectedException {
         if (FormUtil.isNull(champ) || champ.equals("")) {
-            throw new Exception(exceptionVide);}
+            throw new ChampVideException(champ);
+        }
+        try{
+            Integer.parseInt(champ);
+        } catch (Exception e){
+            throw new IntExpectedException(champ);
+        }
     }
 }

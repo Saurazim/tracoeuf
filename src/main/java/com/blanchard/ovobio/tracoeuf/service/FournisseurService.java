@@ -9,8 +9,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * appel des méthodes du dao
@@ -24,7 +26,7 @@ public class FournisseurService {
         return fournisseurDao.findAllByOrderByIdDesc();
     }
 
-    public Fournisseur getById(int id){
+    public Optional<Fournisseur> getById(int id) throws EntityNotFoundException{
         return fournisseurDao.findById(id);
     }
 
@@ -41,6 +43,7 @@ public class FournisseurService {
      * @param autresFournisseurs true si autre fournisseur  à rajouter
      * @return tous les fournisseurs plus une ligne
      */
+    @Deprecated
     public List<Fournisseur> retourListFournisseur(boolean autresFournisseurs){
         List<Fournisseur> fournisseurs = new ArrayList<>();
 

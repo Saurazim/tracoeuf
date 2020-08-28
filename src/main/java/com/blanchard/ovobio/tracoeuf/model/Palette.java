@@ -10,19 +10,19 @@ import javax.persistence.*;
  * une palette est liée à une livraison
  */
 @Entity
-public class LivraisonPalette {
+public class Palette {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer brut;
-    private Integer tarePal;
     private Integer net;
     @ManyToOne
     @JoinColumn(name = "livraisonId", nullable = false)
     private Livraison livraison;
     private String code;
+    private Boolean conforme;
+    private String commentaires;
 
-    public LivraisonPalette(){}
+    public Palette(){}
 
     public Integer getId() {
         return id;
@@ -30,22 +30,6 @@ public class LivraisonPalette {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getBrut() {
-        return brut;
-    }
-
-    public void setBrut(Integer brut) {
-        this.brut = brut;
-    }
-
-    public Integer getTarePal() {
-        return tarePal;
-    }
-
-    public void setTarePal(Integer tarePal) {
-        this.tarePal = tarePal;
     }
 
     public Integer getNet() {
@@ -80,5 +64,21 @@ public class LivraisonPalette {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Boolean getConforme() {
+        return conforme;
+    }
+
+    public void setConforme(Boolean conforme) {
+        this.conforme = conforme;
+    }
+
+    public String getCommentaires() {
+        return commentaires;
+    }
+
+    public void setCommentaires(String commentaires) {
+        this.commentaires = commentaires;
     }
 }

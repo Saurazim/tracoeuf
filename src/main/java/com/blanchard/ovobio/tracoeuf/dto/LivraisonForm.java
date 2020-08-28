@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class LivraisonForm {
     private List<PaletteDto> list = new ArrayList<>();
+    private Integer id;
+    private String prefix;
 
     public List<PaletteDto> getList() {
         return list;
@@ -15,5 +17,21 @@ public class LivraisonForm {
 
     public void setList(List<PaletteDto> list) {
         this.list = list;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 }

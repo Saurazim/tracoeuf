@@ -1,6 +1,9 @@
 package com.blanchard.ovobio.tracoeuf.util;
 
+import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
+import com.blanchard.ovobio.tracoeuf.exceptions.IntExpectedException;
 import com.blanchard.ovobio.tracoeuf.exceptions.SubAboveZeroFalseException;
+import com.blanchard.ovobio.tracoeuf.service.Validation;
 
 /**
  * interface d'expressions et de traitements mathématiques
@@ -19,6 +22,23 @@ public interface MathsUtil {
             throw new SubAboveZeroFalseException();
         }
         return result;
+    }
+
+    static Integer subWithCheck(String str1, String str2) throws ChampVideException, IntExpectedException, SubAboveZeroFalseException {
+        Integer resultat = 0;
+        try{
+            Validation.checkInt(str1);
+            Validation.checkInt(str2);
+        }catch (Exception e){
+            throw e;
+        }
+
+        try{
+            resultat = subAboveZero(Integer.parseInt(str1),Integer.parseInt(str2));
+        } catch (SubAboveZeroFalseException e){
+            throw e;
+        }
+        return resultat;
     }
 
 

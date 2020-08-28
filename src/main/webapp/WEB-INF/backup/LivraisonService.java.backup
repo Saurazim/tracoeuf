@@ -5,14 +5,14 @@ import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
 import com.blanchard.ovobio.tracoeuf.dao.CategorieDao;
 import com.blanchard.ovobio.tracoeuf.dao.FournisseurDao;
 import com.blanchard.ovobio.tracoeuf.dao.LivraisonDao;
-import com.blanchard.ovobio.tracoeuf.dao.LivraisonPaletteDao;
+import com.blanchard.ovobio.tracoeuf.dao.PaletteDao;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonDto;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
 import com.blanchard.ovobio.tracoeuf.exceptions.SubAboveZeroFalseException;
 import com.blanchard.ovobio.tracoeuf.model.Categorie;
 import com.blanchard.ovobio.tracoeuf.model.Fournisseur;
 import com.blanchard.ovobio.tracoeuf.model.Livraison;
-import com.blanchard.ovobio.tracoeuf.model.LivraisonPalette;
+import com.blanchard.ovobio.tracoeuf.model.Palette;
 import com.blanchard.ovobio.tracoeuf.util.CodeLivUtil;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 

@@ -3,7 +3,6 @@ package com.blanchard.ovobio.tracoeuf.controller.vue;
 import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
 import com.blanchard.ovobio.tracoeuf.coordinateur.PaletteMetier;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
-import com.blanchard.ovobio.tracoeuf.service.PaletteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ConcurrentModel;

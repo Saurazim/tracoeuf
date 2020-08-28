@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * appel des méthodes du DAO
@@ -22,7 +23,7 @@ public class CategorieService {
         return categorieDao.findAll();
     }
 
-    public Categorie getById(int id){
+    public Optional<Categorie> getById(int id){
         return categorieDao.findById(id);
     }
 }

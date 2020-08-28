@@ -36,7 +36,7 @@ public class Livraison {
     private String prefixCode;
     private Integer compte;
     @Transient
-    private List<LivraisonPalette> palettes = new ArrayList<>();
+    private List<Palette> palettes = new ArrayList<>();
 
     public Livraison() {}
 
@@ -90,15 +90,15 @@ public class Livraison {
         this.netTotal = MathsUtil.subAboveZero(brutTotal, tare);
     }
 
-    public List<LivraisonPalette> getPalettes() {
+    public List<Palette> getPalettes() {
         return palettes;
     }
 
-    public void setPalettes(List<LivraisonPalette> palettes) {
+    public void setPalettes(List<Palette> palettes) {
         this.palettes = palettes;
     }
 
-    public void addtoPalettes(LivraisonPalette palette){
+    public void addtoPalettes(Palette palette){
         palette.setLivraison(this);
         this.palettes.add(palette);
     }

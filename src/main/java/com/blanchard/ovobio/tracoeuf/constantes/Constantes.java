@@ -37,6 +37,11 @@ public interface Constantes {
     String EXC_TARE_VIDE="exc.tare.vide";
 
     String EXCEPTION_SUB_ABOVE_ZERO="exception.sub.above.zero";
+    String EXCEPTION_CHAMP_INT_EXPECTED="exception.champ.int.expected";
+    String EXCEPTION_CHAMP_INT_EXPECTED_STRING="exception.champ.int.expected.string";
+    String EXCEPTION_CHAMP_VIDE="exception.champ.vide";
+    String EXCEPTION_CHAMP_VIDE_STRING="exception.champ.vide.string";
+
 
     String CATEGORIE_TYPE_BIO="categorie.type.bio";
     String CATEGORIE_TYPE_PA="categorie.type.pa";
