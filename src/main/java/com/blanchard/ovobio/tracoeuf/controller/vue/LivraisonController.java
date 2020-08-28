@@ -71,7 +71,7 @@ public class LivraisonController {
     }
 
     @PostMapping(URL_LIVRAISON)
-    public String livraisonPost(@ModelAttribute LivraisonDto dto, ModelMap mm){
+    public String livraisonPost(@ModelAttribute LivraisonDto dto, Model mm){
         Livraison livraison = livraisonMetier.saveLivraison(dto);
         if (livraisonMetier.getErreurs().isEmpty()){
             LivraisonBo bo = new LivraisonBo();
@@ -80,8 +80,9 @@ public class LivraisonController {
             mm.addAttribute("bo",bo);
             return "forward:/palettes";
         } else {
-            Model model = new ConcurrentModel();
-            model.addAttribute(ATT_FORM, livraisonMetier);
+            mm.addAllAttributes(initVue());
+            mm.addAttribute(ATT_DTO, dto);
+            mm.addAttribute(ATT_FORM, livraisonMetier);
             return "1_livraison";
         }
 

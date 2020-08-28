@@ -2,6 +2,7 @@ package com.blanchard.ovobio.tracoeuf.coordinateur;
 
 import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonDto;
+import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
 import com.blanchard.ovobio.tracoeuf.model.Categorie;
 import com.blanchard.ovobio.tracoeuf.model.Fournisseur;
 import com.blanchard.ovobio.tracoeuf.model.Livraison;
@@ -65,7 +66,7 @@ public class LivraisonMetier {
         LocalDate localDate = LocalDate.MIN;
 
         try {
-            Validation.checkDate(date, ConstantesUtil.getProperty(Constantes.EXC_DATE_VIDE), ConstantesUtil.getProperty(Constantes.EXC_DATE_FORMAT));
+            Validation.checkDate(date, ConstantesUtil.getProperty(Constantes.CHAMP_DATE));
             localDate = LocalDate.parse(date, formatter);
         }catch (Exception e){
             erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_DATE), e.getMessage());
@@ -78,13 +79,20 @@ public class LivraisonMetier {
         // vérifie la valeur fournisseur
         if (ConstantesUtil.getProperty(Constantes.ZERO).equals(fournisseurId)){
             try{
-                Validation.checkVideString(autre,ConstantesUtil.getProperty(Constantes.EXC_FOURNISSEUR));
+                Validation.checkVideString(autre,ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR));
             }catch (Exception e){
                 erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR), e.getMessage());
             }
             fournisseur = fournisseurService.getByNom(autre);
-            if (fournisseur == null){
+            label:if (fournisseur == null){
                 fournisseur = new Fournisseur();
+                try{
+                    Validation.checkVideString(autre,ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR));
+
+                }catch(ChampVideException cve){
+                    erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR), cve.getMessage());
+                    break label;
+                }
                 fournisseur.setNom(autre);
                 fournisseur.setCode(fournisseurService.setCodeByNom(autre));
                 fournisseurService.save(fournisseur);
@@ -100,28 +108,31 @@ public class LivraisonMetier {
 
 
         //verif categ
-        Categorie categorie;
+        Categorie categorie = new Categorie();
 
         try {
             Validation.checkInt(categId.toString());
+            categorie = categorieService.getById(categId).orElseThrow();
         }catch (Exception e){
             erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_CATEGORIE), e.getMessage());
         }
-        categorie = categorieService.getById(categId).orElseThrow();
         livraison.setCategorie(categorie);
 
         //set prefixe
         //code sous forme RFFFCCC##
-        StringBuilder codePrefixe  = new StringBuilder();
-        codePrefixe.append(ConstantesUtil.getProperty(Constantes.CODE_PREFIXE));//R
-        codePrefixe.append(fournisseur.getCode());//FFF
-        codePrefixe.append(categorie.getType());//CCC
-        codePrefixe.append(livraisonService.compteLivraisons(localDate,fournisseur,categorie));//##
 
-        livraison.setPrefixCode(codePrefixe.toString());
 
         if (erreurs.isEmpty()){
             resultat = "Succès";
+
+            StringBuilder codePrefixe  = new StringBuilder();
+            codePrefixe.append(ConstantesUtil.getProperty(Constantes.CODE_PREFIXE));//R
+            codePrefixe.append(fournisseur.getCode());//FFF
+            codePrefixe.append(categorie.getType());//CCC
+            codePrefixe.append(livraisonService.compteLivraisons(localDate,fournisseur,categorie));//##
+
+            livraison.setPrefixCode(codePrefixe.toString());
+
             livraisonService.save(livraison);
 
         } else {

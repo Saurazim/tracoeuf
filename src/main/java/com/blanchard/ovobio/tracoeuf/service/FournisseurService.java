@@ -56,6 +56,9 @@ public class FournisseurService {
     }
 
     public String setCodeByNom(String nom){
-        return nom.substring(0,3).toUpperCase();
+        if (nom.length()>3)
+            return nom.substring(0,3).toUpperCase();
+        else
+            return nom.toUpperCase();
     }
 }

@@ -15,8 +15,8 @@ pageEncoding="UTF-8"%>-->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/switchSlider.css">
   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<c:url value='${pageContext.request.contextPath}/js/fields.js'/>"></script>
-    <script src="<c:url value='${pageContext.request.contextPath}/js/script.js'/>"></script>
+    <script src="<c:url value='/js/fields.js'/>"></script>
+    <script src="<c:url value='/js/script.js'/>"></script>
 
     <title>Réception de livraison</title>
 </head>
@@ -99,6 +99,7 @@ pageEncoding="UTF-8"%>-->
                     </tr>
                 </tbody>
             </table>
+            <a href="${pageContext.request.contextPath}/testPdf">Imprimer</a>
         </form>
     </section>
 </body>

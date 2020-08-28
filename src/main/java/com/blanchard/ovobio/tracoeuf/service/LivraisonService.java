@@ -41,10 +41,6 @@ public class LivraisonService {
         return livraisonDao.countAllByDateAndFournisseurAndCategorie(localDate,fournisseur,categorie);
     }
 
-    public void saveAll(List<Livraison> livraisons){
-        livraisonDao.saveAll(livraisons);
-    }
-
     public List<Livraison> findAll(){
         return livraisonDao.findAll();
     }

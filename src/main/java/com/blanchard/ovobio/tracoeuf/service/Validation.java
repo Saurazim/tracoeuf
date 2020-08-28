@@ -3,6 +3,7 @@ package com.blanchard.ovobio.tracoeuf.service;
 import com.blanchard.ovobio.tracoeuf.bo.TareBo;
 import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
+import com.blanchard.ovobio.tracoeuf.exceptions.DateFormatException;
 import com.blanchard.ovobio.tracoeuf.exceptions.IntExpectedException;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import com.blanchard.ovobio.tracoeuf.util.FormUtil;
@@ -12,23 +13,23 @@ import com.blanchard.ovobio.tracoeuf.util.FormUtil;
  */
 public interface Validation {
 
-    static void checkVideString(String champ, String exception) throws Exception {
-        if (FormUtil.isNull(champ) || champ.isEmpty())
-            throw new Exception(exception);
+    static void checkVideString(String valeur, String champ) throws ChampVideException {
+        if (valeur.isBlank())
+            throw new ChampVideException(champ);
     }
 
-    static boolean checkPoids(Integer champ, String exceptionVide, String exceptionNonInt) throws Exception {
-        if (FormUtil.isNull(champ) || champ.equals("")) {
-            throw new Exception(exceptionVide);}
+    static boolean checkPoids(Integer valeur, String champ) throws ChampVideException {
+        if (FormUtil.isNull(valeur) || valeur.equals("")) {
+            throw new ChampVideException(champ);}
         return true;
     }
 
-    static void checkDate(String champDate, String exceptionVide, String ExceptionFormat) throws Exception{
+    static void checkDate(String champDate, String ExceptionFormat) throws ChampVideException, DateFormatException {
         if (FormUtil.isNull(champDate)){
             throw new ChampVideException(champDate);
         } else {
             if (!champDate.matches("([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")){
-                throw new Exception(ExceptionFormat);
+                throw new DateFormatException();
             }
         }
     }

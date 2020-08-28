@@ -23,19 +23,19 @@ pageEncoding="UTF-8"%>-->
                 <th></th>
             </tr>
             <tr>
-                <td><form:input type="date" path="date"/></td>
+                <td><form:input type="date" path="date" value="${dto.date}"/></td>
                 <td>
-                  <form:select path="fournisseurId" onclick="toggleSelect()">
+                  <form:select path="fournisseurId" onclick="toggleSelect()" value="${dto.fournisseurId}">
                     <form:options items="${fournisseurs}" itemValue="id" itemLabel="nom"/>
                     <form:option value="0" label="Autre fournisseur"/>
                   </form:select>
-                  <form:input path="fournisseurAutre"/>
+                  <form:input path="fournisseurAutre" value="${dto.fournisseurAutre}"/>
                 </td>
                 <td>
-                    <form:select path="categorieId" items="${categories}" itemValue="id" itemLabel="type"/>
+                    <form:select path="categorieId" items="${categories}" itemValue="id" itemLabel="type" value="${dto.categorieId}" />
                 </td>
                 <td>
-                    <form:input type="number" path="nombrePalette"/>
+                    <form:input type="number" path="nombrePalette" value="${dto.nombrePalette}" />
                 </td>
                 <td><button>Réception</button></td>
             </tr>
