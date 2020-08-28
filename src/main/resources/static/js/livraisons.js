@@ -1,6 +1,6 @@
 function toggleSelect(){
-    var chpsText = document.querySelector("autre_fournisseur");
-    var option = document.querySelector("id_fournisseur");
+    var chpsText = document.querySelector("#fournisseurAutre");
+    var option = document.querySelector("#fournisseurId");
     if(option.value == 0){
         chpsText.classList.remove("hidden");
     } else {

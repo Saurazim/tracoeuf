@@ -1,9 +1,43 @@
-table{
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table
+{
     table-layout: fixed;
     width: 100%;
+    border: 3px solid purple;
+    border-collapse: collapse;
+}
+table.padding th,table.padding td
+{
+    padding-block: 10px
+}
+th
+{
+    background-color: black;
+    color: white;
+}
+td
+{
+    text-align: center;
+}
+tr:nth-child(2n)
+{
+    background-color: #e0e0e0;
+}
+
+tr:nth-child(2n+1)
+{
+    background-color: #ffffff;
 }
 
 .hidden
 {
     visibility: hidden;
+}
+
+.displayNone{
+    display: none;
 }
