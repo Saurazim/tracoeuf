@@ -4,7 +4,69 @@ input.disabled{
     opacity: 75%;
 }
 
-table{
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table
+{
     table-layout: fixed;
     width: 100%;
+    border: 3px solid purple;
+    border-collapse: collapse;
+    grid-column: 2 / 6;
+}
+table.padding th,table.padding td
+{
+    padding-block: 10px
+}
+th
+{
+    background-color: black;
+    color: white;
+}
+td
+{
+    text-align: center;
+}
+tr:nth-child(2n)
+{
+    background-color: #e0e0e0;
+}
+
+tr:nth-child(2n+1)
+{
+    background-color: #ffffff;
+}
+
+.hidden
+{
+    visibility: hidden;
+}
+
+.displayNone{
+    display: none;
+}
+
+form
+{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+section
+{
+    grid-column: 1/ 1;
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-size: larger;
+}
+
+p{
+    margin: 0;
+    position: sticky;
+    top: 50%;
+    left: 50%;
 }
