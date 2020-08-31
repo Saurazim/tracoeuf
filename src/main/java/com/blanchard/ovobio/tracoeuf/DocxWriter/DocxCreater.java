@@ -13,8 +13,8 @@ import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
-import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
 public class DocxCreater {
     private static final String INPUT_PATH = ConstantesUtil.getProperty(Constantes.INPUT_PATH);
@@ -24,14 +24,18 @@ public class DocxCreater {
     private static final String DATE = "date";
 
 
-    public void createDocx(TemplatePalette tp) {
+    public String[] creerEtiquettePalette(TemplatePalette tp) {
         //init
         WordprocessingMLPackage wmlPackage = new WordprocessingMLPackage();
+        String nom = OUTPUT_PATH+tp.getNom();
+        String issue="echec";
+        int ct=0;
         try{
             wmlPackage = Docx4J.load(new File(INPUT_PATH+DOC));
         } catch (Docx4JException d4je){
             d4je.printStackTrace();
             System.out.println("pas de template valable dans l'application : "+INPUT_PATH+DOC);
+            ct--;
         }
         MainDocumentPart docPart = wmlPackage.getMainDocumentPart();
         //get mapping
@@ -45,19 +49,27 @@ public class DocxCreater {
             docPart.variableReplace(mappings);
         } catch (Docx4JException d4je){
             d4je.printStackTrace();
+            ct--;
         } catch (JAXBException je){
             je.printStackTrace();
+            ct--;
         }
 
         long end = System.currentTimeMillis();
         long total = end - start;
         System.out.println("Time: "+total);
 
+        String[] map = new String[2];
         //save
         try {
-            wmlPackage.save(new File(OUTPUT_PATH+tp.getNom()));
+            wmlPackage.save(new File(nom));
+            if (ct>=0)
+                issue="reussite";
         }  catch (Docx4JException d4je){
             d4je.printStackTrace();
         }
+        map[0] = issue;
+        map[1] = nom;
+        return map;
     }
 }

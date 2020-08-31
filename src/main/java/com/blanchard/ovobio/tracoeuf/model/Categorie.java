@@ -1,8 +1,9 @@
 package com.blanchard.ovobio.tracoeuf.model;
 
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * catégorie d'oeuf
@@ -47,5 +48,13 @@ public class Categorie {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 }

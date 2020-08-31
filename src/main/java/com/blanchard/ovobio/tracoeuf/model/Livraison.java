@@ -2,7 +2,6 @@ package com.blanchard.ovobio.tracoeuf.model;
 
 import com.blanchard.ovobio.tracoeuf.exceptions.SubAboveZeroFalseException;
 import com.blanchard.ovobio.tracoeuf.util.MathsUtil;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.LocalDate;

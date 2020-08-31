@@ -15,7 +15,7 @@ public class LivraisonDto {
     private String fournisseurId;
     private String fournisseurAutre;
     private Integer categorieId;
-    private Integer nombrePalette = ConstantesUtil.getPropertyToInt(Constantes.ZERO);
+    private Integer nombrePalette = 1;
 
     public LivraisonDto(){}
 

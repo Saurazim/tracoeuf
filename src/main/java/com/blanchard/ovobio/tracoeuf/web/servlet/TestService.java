@@ -25,7 +25,7 @@ public class TestService {
         testModel.setDateInscription(LocalDateTime.now());
         testDao.save(testModel);
         Iterable<TestModel> testList = testDao.findAll();
-        for(Iterator i = testList.iterator();i.hasNext();){
+        for(Iterator<TestModel> i = testList.iterator();i.hasNext();){
             TestModel test = (TestModel) i.next();
             String email = test.getEmail();
             String mdp = test.getMotDePasse();

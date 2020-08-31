@@ -14,6 +14,10 @@ public interface Constantes {
     String INPUT_PATH = "path.input";
     String OUTPUT_PATH = "path.output";
 
+    String PRINTER_NAME = "printer.name";
+
+    String EXTENSION_ETIQUETTE_PALETTE = "extension.etiquette.palette";
+
     String CACHE_EVICT_CRON = "cache.evict.cron";
 
     String PATTERN = "date.pattern";

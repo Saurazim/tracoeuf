@@ -8,7 +8,12 @@ import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
  * le résultat ne peut pas être négatif
  */
 public class SubAboveZeroFalseException extends Exception{
-    public SubAboveZeroFalseException(){
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+    public SubAboveZeroFalseException() {
         super(ConstantesUtil.getProperty(Constantes.EXCEPTION_SUB_ABOVE_ZERO));
     }
 }

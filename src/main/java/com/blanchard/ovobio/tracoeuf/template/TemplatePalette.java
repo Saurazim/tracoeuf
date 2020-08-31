@@ -1,14 +1,28 @@
 package com.blanchard.ovobio.tracoeuf.template;
 
+import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
+import com.blanchard.ovobio.tracoeuf.util.FormUtil;
+
+import java.time.LocalDate;
+
 public class TemplatePalette {
     private String reference;
     private String date;
     private String nom;
 
+    private static final String extension = ConstantesUtil.getProperty(Constantes.EXTENSION_ETIQUETTE_PALETTE);
+
     public TemplatePalette(String reference, String date) {
         this.reference = reference;
         this.date = date;
-        this.nom = date+reference+".docx";
+    }
+
+    public TemplatePalette(String reference, LocalDate date) {
+        this.reference = reference;
+        this.setDate(date);
+        this.nom=reference+date.toString()+extension;
+
     }
 
     public String getRef() {
@@ -27,11 +41,19 @@ public class TemplatePalette {
         this.date = date;
     }
 
+    public void setDate(LocalDate date){
+        this.date = FormUtil.dateToString(date);
+    }
+
     public String getNom() {
         return nom;
     }
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public void setNom(String reference, LocalDate date){
+        this.nom = reference+date.toString()+extension;
     }
 }

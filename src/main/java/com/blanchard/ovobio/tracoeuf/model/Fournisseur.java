@@ -1,8 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.model;
 
 
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import javax.persistence.*;
 
 /**
@@ -21,7 +19,7 @@ public class Fournisseur {
 
     public Fournisseur(){}
 
-    public Fournisseur(String nom){
+    public Fournisseur(String nom) {
         this.nom = nom;
     }
 

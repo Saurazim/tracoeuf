@@ -12,12 +12,12 @@ import com.blanchard.ovobio.tracoeuf.model.Categorie;
 import com.blanchard.ovobio.tracoeuf.model.Fournisseur;
 import com.blanchard.ovobio.tracoeuf.model.Livraison;
 import com.blanchard.ovobio.tracoeuf.service.CategorieService;
+import com.blanchard.ovobio.tracoeuf.service.DocumentMetier;
 import com.blanchard.ovobio.tracoeuf.service.FournisseurService;
 import com.blanchard.ovobio.tracoeuf.service.LivraisonService;
 
 import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
 import com.blanchard.ovobio.tracoeuf.util.FormUtil;
-import org.checkerframework.checker.formatter.FormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,10 +79,8 @@ public class LivraisonController {
         Livraison l = livraisonMetier.saveLivraison(dto);
         if (livraisonMetier.getErreurs().isEmpty()){
             String ref = l.getPrefixCode();
+            new DocumentMetier().impressionEtiquettesPalettes(l,dto.getNombrePalette());
             LivraisonBo bo = new LivraisonBo();
-            TemplatePalette tp = new TemplatePalette(ref, FormUtil.dateToString(l.getDate()));
-
-            new DocxCreater().createDocx(tp);
             bo.setPrefix(ref);
             bo.setId(l.getId());
             mm.addAttribute("bo",bo);

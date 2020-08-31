@@ -1,22 +1,26 @@
 package com.blanchard.ovobio.tracoeuf.web.servlet;
 
 import com.blanchard.ovobio.tracoeuf.DocxWriter.DocxCreater;
+import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
 
+import com.blanchard.ovobio.tracoeuf.printer.Printer;
 import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
+import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.File;
 import java.time.LocalDate;
 
 @Controller
 public class TestServlet {
-    public static final String ATT_MESSAGES = "messages";
-    public static final String VUE = "test";
-    private static final String NOM = "helloworld.pdf";
+//    public static final String ATT_MESSAGES = "messages";
+//    public static final String VUE = "test";
+//    private static final String NOM = "helloworld.pdf";
 
     @Autowired
     TestService test;
@@ -48,7 +52,9 @@ public class TestServlet {
     @GetMapping("/testPdf")
     public String imprimer(Model model) throws Exception{
         DocxCreater pc = new DocxCreater();
-        pc.createDocx(new TemplatePalette("RFFFCCCX", LocalDate.now().toString()));
+        pc.creerEtiquettePalette(new TemplatePalette("RFFFCCCX", LocalDate.now()));
+        File file = new File(ConstantesUtil.getProperty(Constantes.OUTPUT_PATH)+"essai1.docx");
+        new Printer().imprimer(file,1);
         return "test";
     }
 
