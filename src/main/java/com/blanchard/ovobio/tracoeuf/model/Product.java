@@ -1,12 +1,13 @@
 package com.blanchard.ovobio.tracoeuf.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.Length;
-import javax.persistence.*;
-import javax.validation.constraints.Min;
 
 /**
  * TODO entity test

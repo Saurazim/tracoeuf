@@ -11,7 +11,8 @@ public interface Constantes {
 
     String LIVRAISON_URL = "livraison.url";
     String LIVRAISON_JSP = "livraison.jsp";
-    String PDF_PATH = "pdf.path";
+    String INPUT_PATH = "path.input";
+    String OUTPUT_PATH = "path.output";
 
     String CACHE_EVICT_CRON = "cache.evict.cron";
 

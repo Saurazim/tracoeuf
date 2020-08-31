@@ -1,15 +1,16 @@
 package com.blanchard.ovobio.tracoeuf.web.servlet;
 
-import com.blanchard.ovobio.tracoeuf.PdfWriter.PdfCreater;
+import com.blanchard.ovobio.tracoeuf.DocxWriter.DocxCreater;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
+
+import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.File;
-import java.util.List;
+import java.time.LocalDate;
 
 @Controller
 public class TestServlet {
@@ -46,8 +47,8 @@ public class TestServlet {
 
     @GetMapping("/testPdf")
     public String imprimer(Model model) throws Exception{
-        PdfCreater pc = new PdfCreater();
-        pc.createPdf(NOM);
+        DocxCreater pc = new DocxCreater();
+        pc.createDocx(new TemplatePalette("RFFFCCCX", LocalDate.now().toString()));
         return "test";
     }
 
