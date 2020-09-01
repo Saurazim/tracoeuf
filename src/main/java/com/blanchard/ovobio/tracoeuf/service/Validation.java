@@ -1,7 +1,8 @@
 package com.blanchard.ovobio.tracoeuf.service;
 
 import com.blanchard.ovobio.tracoeuf.bo.TareBo;
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
 import com.blanchard.ovobio.tracoeuf.exceptions.DateFormatException;
 import com.blanchard.ovobio.tracoeuf.exceptions.IntExpectedException;
@@ -19,16 +20,16 @@ public interface Validation {
     }
 
     static boolean checkPoids(Integer valeur, String champ) throws ChampVideException {
-        if (FormUtil.isNull(valeur) || valeur.equals("")) {
+        if (FormUtil.isNull(valeur)) {
             throw new ChampVideException(champ);}
         return true;
     }
 
-    static void checkDate(String champDate, String ExceptionFormat) throws ChampVideException, DateFormatException {
-        if (FormUtil.isNull(champDate)){
+    static void checkDate(String date, String champDate) throws ChampVideException, DateFormatException {
+        if (FormUtil.isNull(date)){
             throw new ChampVideException(champDate);
         } else {
-            if (!champDate.matches("([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")){
+            if (!date.matches("([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")){
                 throw new DateFormatException();
             }
         }
@@ -36,8 +37,7 @@ public interface Validation {
 
     /**
      * check la valeur de la tare et renvoie la valeur final
-     * @param tareBo
-     * @return
+     * @param tareBo objet tare
      * @throws Exception si check et autre tare vide
      */
     static void checkTare(TareBo tareBo) throws Exception{
@@ -46,7 +46,11 @@ public interface Validation {
             checkInt(tareBo.getTare().toString());
             intTare = tareBo.getTare();
         }else{
-            intTare = getTareBySC(tareBo.getTareNbAlveole(), tareBo.getTareTypePalette());
+            try {
+                intTare = getTareBySC(tareBo.getTareNbAlveole(), tareBo.getTareTypePalette());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         tareBo.setTareFinal(intTare);
     }
@@ -55,13 +59,13 @@ public interface Validation {
 
     /**
      * get tare par table des tares
-     * @param nbAlveole
-     * @param typePalette
-     * @return
+     * @param nbAlveole nb d'alvéole d'un étage
+     * @param typePalette type de la matière
+     * @return une tare en kg
      */
     private static int getTareBySC(Integer nbAlveole, String typePalette) {//TODO créer table des tares
         int tare = 10;
-        if(ConstantesUtil.getProperty(Constantes.TARE_TYPE_PLASTIQUE).equals(typePalette)){
+        if(ConstInt.TARE_TYPE_PLASTIQUE.equals(typePalette)){
             switch (nbAlveole){
                 case 5:
                     tare=78;

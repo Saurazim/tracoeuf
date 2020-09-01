@@ -6,7 +6,8 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.dao.FournisseurDao;
 import com.blanchard.ovobio.tracoeuf.model.Fournisseur;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
@@ -45,13 +46,11 @@ public class FournisseurService {
      */
     @Deprecated
     public List<Fournisseur> retourListFournisseur(boolean autresFournisseurs){
-        List<Fournisseur> fournisseurs = new ArrayList<>();
-
-        Fournisseur fournisseur = new Fournisseur(ConstantesUtil.getPropertyToInt(Constantes.ZERO), ConstantesUtil.getProperty(Constantes.FOURNISSEUR_AUTRE));//(0,"autre fournisseur")
-
-        fournisseurs = retourListFournisseur();
-        fournisseurs.add(fournisseur);
-
+        List<Fournisseur> fournisseurs = retourListFournisseur();
+        if(autresFournisseurs) {
+            Fournisseur fournisseur = new Fournisseur(ConstInt.FOURNISSEUR_ID_AUTRE, ConstInt.FOURNISSEUR_AUTRE);
+            fournisseurs.add(fournisseur);
+        }
         return fournisseurs;
     }
 

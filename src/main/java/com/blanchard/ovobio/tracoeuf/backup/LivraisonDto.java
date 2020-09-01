@@ -1,6 +1,7 @@
 package com.blanchard.ovobio.tracoeuf.backup;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 
 import java.time.LocalDate;
@@ -13,17 +14,17 @@ import java.time.format.DateTimeFormatter;
  * @deprecated
  */
 public class LivraisonDto {
-    private Integer idColumn = ConstantesUtil.getPropertyToInt(Constantes.ZERO);
+    private Integer idColumn = ConstInt.ZERO;
     private String date = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
-    private String idFournisseur= ConstantesUtil.getProperty(Constantes.FOURNISSEUR_ID_DEFAULT);
+    private String idFournisseur= ConstInt.FOURNISSEUR_ID_DEFAULT.toString();
     private String autreFournisseur;
-    private Integer idCategorie=ConstantesUtil.getPropertyToInt(Constantes.CATEGORIE_TYPE_ID_BIO);
+    private Integer idCategorie=ConstInt.CATEGORIE_TYPE_ID_BIO;
     private Integer poidsPalette;
     private Boolean typePoids;
-    private Integer tareNbAlveole=ConstantesUtil.getPropertyToInt(Constantes.TARE_NB_ALVEOLE_DEFAULT);
-    private String tareTypePalette=ConstantesUtil.getProperty(Constantes.TARE_TYPE_PLASTIQUE);
+    private Integer tareNbAlveole=ConstInt.TARE_NB_ALVEOLE_DEFAULT;
+    private String tareTypePalette=ConstInt.TARE_TYPE_PLASTIQUE;
     private Integer nbTare;
-    private Boolean checkTare = ConstantesUtil.getPropertyToBool(Constantes.TRUE);
+    private Boolean checkTare = ConstantesUtil.getPropertyToBool(ConstExt.CHECK_TARE);
 
     public LivraisonDto(){}
 

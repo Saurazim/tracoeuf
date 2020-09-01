@@ -1,6 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.printer;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 
 import javax.print.*;
@@ -12,9 +12,9 @@ import java.io.*;
 import static java.lang.Math.round;
 
 public class Printer {
-    private static final String INPUT = ConstantesUtil.getProperty(Constantes.INPUT_PATH);
-    private static final String OUTPUT = ConstantesUtil.getProperty(Constantes.OUTPUT_PATH);
-    private static final String PRINTER = ConstantesUtil.getProperty(Constantes.PRINTER_NAME);
+    private static final String INPUT = ConstantesUtil.getProperty(ConstExt.INPUT_PATH);
+    private static final String OUTPUT = ConstantesUtil.getProperty(ConstExt.OUTPUT_PATH);
+    private static final String PRINTER = ConstantesUtil.getProperty(ConstExt.PRINTER_NAME);
 
     public void imprimer(File file, float nombreCopie) {
         int nbcopies = round(nombreCopie/2);

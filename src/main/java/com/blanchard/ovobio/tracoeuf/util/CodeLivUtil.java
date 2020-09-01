@@ -1,6 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.util;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 
 import java.time.LocalDate;
 
@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * @deprecated
  */
 public interface CodeLivUtil {
-    int CFL = ConstantesUtil.getPropertyToInt(Constantes.CODE_FOURNISSEUR_LONGUEUR);
+    int CFL = ConstantesUtil.getPropertyToInt(ConstExt.CODE_FOURNISSEUR_LONGUEUR);
 
     /**
      * @deprecated la date n'entre plus dans la composition du code
@@ -18,11 +18,9 @@ public interface CodeLivUtil {
      * @return code de la date
      */
     static int getDateCode(LocalDate date){
-        String codeTmp = new String();
         String year = String.valueOf(date.getYear());
-        codeTmp = year.substring(year.length() - 2)+String.valueOf(date.getDayOfYear());
-        int code = Integer.parseInt(codeTmp);
-        return code;
+        String codeTmp = year.substring(year.length() - 2)+date.getDayOfYear();
+        return Integer.parseInt(codeTmp);
     }
 
     /**
@@ -31,13 +29,12 @@ public interface CodeLivUtil {
      * @return le code
      */
     static String getFournisseurCode(String nom){
-        String codeTmp = new String();
+        String codeTmp;
         if (nom.length()>CFL)
             codeTmp = nom.substring(0,CFL);
         else
             codeTmp = nom;
-        String code =  codeTmp.toUpperCase();
-        return code;
+        return codeTmp.toUpperCase();
     }
 
 }

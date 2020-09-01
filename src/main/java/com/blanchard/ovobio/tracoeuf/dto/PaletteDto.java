@@ -1,14 +1,15 @@
 package com.blanchard.ovobio.tracoeuf.dto;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 
 public class PaletteDto {
-    private Integer idColumn;
+    private Integer idColumn = ConstInt.ZERO;
     private String poids;
-    private String tare = ConstantesUtil.getProperty(Constantes.ZERO);
+    private String tare = ConstInt.ZERO.toString();
     private String net;
-    private boolean conforme = ConstantesUtil.getPropertyToBool(Constantes.FALSE);
+    private boolean conforme = ConstantesUtil.getPropertyToBool(ConstExt.CHECK_CONFORME);
     private String commentaires;
 
     public PaletteDto(){}

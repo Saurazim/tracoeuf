@@ -1,12 +1,10 @@
 package com.blanchard.ovobio.tracoeuf.printer;
 
 import javax.print.PrintService;
-import javax.print.attribute.standard.PrinterName;
 import java.awt.print.PrinterJob;
-import java.util.Iterator;
 
 public interface PrintUtil {
-    public static PrintService findPrintService(String printerName){
+    static PrintService findPrintService(String printerName){
         printerName = printerName.toLowerCase();
 
         PrintService service = null;

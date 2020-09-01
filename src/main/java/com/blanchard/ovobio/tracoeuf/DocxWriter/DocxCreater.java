@@ -3,7 +3,7 @@ package com.blanchard.ovobio.tracoeuf.DocxWriter;
 
 
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import org.docx4j.Docx4J;
@@ -14,11 +14,10 @@ import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 public class DocxCreater {
-    private static final String INPUT_PATH = ConstantesUtil.getProperty(Constantes.INPUT_PATH);
-    private static final String OUTPUT_PATH = ConstantesUtil.getProperty(Constantes.OUTPUT_PATH);
+    private static final String INPUT_PATH = ConstantesUtil.getProperty(ConstExt.INPUT_PATH);
+    private static final String OUTPUT_PATH = ConstantesUtil.getProperty(ConstExt.OUTPUT_PATH);
     private static final String DOC = "template_palette.docx";
     private static final String REF = "reference";
     private static final String DATE = "date";
@@ -47,11 +46,8 @@ public class DocxCreater {
 
         try{
             docPart.variableReplace(mappings);
-        } catch (Docx4JException d4je){
-            d4je.printStackTrace();
-            ct--;
-        } catch (JAXBException je){
-            je.printStackTrace();
+        } catch (Docx4JException | JAXBException e) {
+            e.printStackTrace();
             ct--;
         }
 

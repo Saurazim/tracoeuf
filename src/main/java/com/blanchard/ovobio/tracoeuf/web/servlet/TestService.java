@@ -16,7 +16,7 @@ public class TestService {
     @Autowired
     TestDao testDao;
 
-    private List<String> messages = new ArrayList<>();
+    private final List<String> messages = new ArrayList<>();
     public List<String> executerTests(Model model) {
         TestModel testModel = new TestModel();
         testModel.setEmail("jmarc@mail.fr");
@@ -25,8 +25,7 @@ public class TestService {
         testModel.setDateInscription(LocalDateTime.now());
         testDao.save(testModel);
         Iterable<TestModel> testList = testDao.findAll();
-        for(Iterator<TestModel> i = testList.iterator();i.hasNext();){
-            TestModel test = (TestModel) i.next();
+        for(TestModel test : testList){
             String email = test.getEmail();
             String mdp = test.getMotDePasse();
             String nom = test.getNomUtilisateur();

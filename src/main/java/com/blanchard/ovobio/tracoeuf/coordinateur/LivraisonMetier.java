@@ -1,6 +1,7 @@
 package com.blanchard.ovobio.tracoeuf.coordinateur;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonDto;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
 import com.blanchard.ovobio.tracoeuf.model.Categorie;
@@ -51,8 +52,9 @@ public class LivraisonMetier {
     }
 
     /**
-     *
-     * @param dto
+     * Enregistre l'objet livraison
+     * @param dto objet contenant les infos du formulaire
+     * @return l'objet livraison enregistré
      */
     public Livraison saveLivraison(LivraisonDto dto){
         String date = dto.getDate();
@@ -66,10 +68,10 @@ public class LivraisonMetier {
         LocalDate localDate = LocalDate.MIN;
 
         try {
-            Validation.checkDate(date, ConstantesUtil.getProperty(Constantes.CHAMP_DATE));
+            Validation.checkDate(date, ConstInt.CHAMP_DATE);
             localDate = LocalDate.parse(date, formatter);
         }catch (Exception e){
-            erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_DATE), e.getMessage());
+            erreurs.put(ConstInt.CHAMP_DATE, e.getMessage());
         }
         livraison.setDate(localDate);
 
@@ -77,20 +79,20 @@ public class LivraisonMetier {
         Fournisseur fournisseur;
 
         // vérifie la valeur fournisseur
-        if (ConstantesUtil.getProperty(Constantes.ZERO).equals(fournisseurId)){
+        if (ConstInt.FOURNISSEUR_ID_AUTRE.toString().equals(fournisseurId)){
             try{
-                Validation.checkVideString(autre,ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR));
+                Validation.checkVideString(autre,ConstInt.CHAMP_FOURNISSEUR);
             }catch (Exception e){
-                erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR), e.getMessage());
+                erreurs.put(ConstInt.CHAMP_FOURNISSEUR, e.getMessage());
             }
             fournisseur = fournisseurService.getByNom(autre);
             label:if (fournisseur == null){
                 fournisseur = new Fournisseur();
                 try{
-                    Validation.checkVideString(autre,ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR));
+                    Validation.checkVideString(autre,ConstInt.CHAMP_FOURNISSEUR);
 
                 }catch(ChampVideException cve){
-                    erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_FOURNISSEUR), cve.getMessage());
+                    erreurs.put(ConstInt.CHAMP_FOURNISSEUR, cve.getMessage());
                     break label;
                 }
                 fournisseur.setNom(autre);
@@ -114,7 +116,7 @@ public class LivraisonMetier {
             Validation.checkInt(categId.toString());
             categorie = categorieService.getById(categId).orElseThrow();
         }catch (Exception e){
-            erreurs.put(ConstantesUtil.getProperty(Constantes.CHAMP_CATEGORIE), e.getMessage());
+            erreurs.put(ConstInt.CHAMP_CATEGORIE, e.getMessage());
         }
         livraison.setCategorie(categorie);
 
@@ -125,13 +127,12 @@ public class LivraisonMetier {
         if (erreurs.isEmpty()){
             resultat = "Succès";
 
-            StringBuilder codePrefixe  = new StringBuilder();
-            codePrefixe.append(ConstantesUtil.getProperty(Constantes.CODE_PREFIXE));//R
-            codePrefixe.append(fournisseur.getCode());//FFF
-            codePrefixe.append(categorie.getType());//CCC
-            codePrefixe.append(livraisonService.compteLivraisons(localDate,fournisseur,categorie));//##
+            String code = ConstantesUtil.getProperty(ConstExt.CODE_PREFIXE)
+                    +fournisseur.getCode()
+                    +categorie.getType()
+                    +livraisonService.compteLivraisons(localDate,fournisseur,categorie);
 
-            livraison.setPrefixCode(codePrefixe.toString());
+            livraison.setPrefixCode(code);
 
             livraisonService.save(livraison);
 

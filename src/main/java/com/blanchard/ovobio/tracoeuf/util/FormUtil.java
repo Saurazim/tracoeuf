@@ -1,6 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.util;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,13 +9,10 @@ import java.time.format.DateTimeFormatter;
  * interface pour la validation de valeurs
  */
 public interface FormUtil {
-    static final String DATE_FORMAT = ConstantesUtil.getProperty(Constantes.PATTERN);
+    String DATE_FORMAT = ConstantesUtil.getProperty(ConstExt.PATTERN);
 
     static boolean isNull(Object object){
-        if (object == null)
-            return true;
-        else
-            return false;
+        return (object==null);
     }
 
     static String dateToString(LocalDate date){

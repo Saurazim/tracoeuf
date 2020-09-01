@@ -1,6 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.exceptions;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 
 public class ChampVideException extends Exception{
@@ -10,7 +10,7 @@ public class ChampVideException extends Exception{
     private static final long serialVersionUID = 1L;
 
     public ChampVideException(String champ) {
-        super(ConstantesUtil.getProperty(Constantes.EXCEPTION_CHAMP_VIDE_STRING) + champ);
+        super(ConstantesUtil.getProperty(ConstExt.EXCEPTION_CHAMP_VIDE_STRING) + champ);
     }
-    public ChampVideException(){super(ConstantesUtil.getProperty(Constantes.EXCEPTION_CHAMP_VIDE));}
+    public ChampVideException(){super(ConstantesUtil.getProperty(ConstExt.EXCEPTION_CHAMP_VIDE));}
 }

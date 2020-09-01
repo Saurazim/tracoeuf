@@ -1,6 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.configuration;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 
 import java.util.Properties;
 
@@ -17,7 +17,7 @@ public class Configurations {
     private Configurations(){
         this.properties = new Properties();
         try{
-            properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(Constantes.RESOURCE));
+            properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(ConstExt.RESOURCE));
         }catch (Exception e){
             e.printStackTrace();
         }

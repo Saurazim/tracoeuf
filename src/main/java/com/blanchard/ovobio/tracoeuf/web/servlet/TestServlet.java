@@ -1,7 +1,7 @@
 package com.blanchard.ovobio.tracoeuf.web.servlet;
 
 import com.blanchard.ovobio.tracoeuf.DocxWriter.DocxCreater;
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
 
 import com.blanchard.ovobio.tracoeuf.printer.Printer;
@@ -50,10 +50,10 @@ public class TestServlet {
 
 
     @GetMapping("/testPdf")
-    public String imprimer(Model model) throws Exception{
+    public String imprimer(Model model){
         DocxCreater pc = new DocxCreater();
         pc.creerEtiquettePalette(new TemplatePalette("RFFFCCCX", LocalDate.now()));
-        File file = new File(ConstantesUtil.getProperty(Constantes.OUTPUT_PATH)+"essai1.docx");
+        File file = new File(ConstantesUtil.getProperty(ConstExt.OUTPUT_PATH)+"essai1.docx");
         new Printer().imprimer(file,1);
         return "test";
     }

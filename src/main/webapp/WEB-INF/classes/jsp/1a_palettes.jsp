@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%>-->
                 <th>Poids(kg)</th>
                 <th>Tare(kg)</th>
                 <th>Poids Net(kg)</th>
-                <th>Conformité</th>
+                <th>Conformité<br/>des critères<br/>de réception</th>
                 <th>Commentaires</th>
                 <th>Actions</th>
             </tr>

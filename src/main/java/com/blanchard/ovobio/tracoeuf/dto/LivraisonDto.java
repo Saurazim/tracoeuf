@@ -1,8 +1,5 @@
 package com.blanchard.ovobio.tracoeuf.dto;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
-import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

@@ -1,6 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.template;
 
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import com.blanchard.ovobio.tracoeuf.util.FormUtil;
 
@@ -11,7 +11,7 @@ public class TemplatePalette {
     private String date;
     private String nom;
 
-    private static final String extension = ConstantesUtil.getProperty(Constantes.EXTENSION_ETIQUETTE_PALETTE);
+    private static final String extension = ConstantesUtil.getProperty(ConstExt.EXTENSION_ETIQUETTE_PALETTE);
 
     public TemplatePalette(String reference, String date) {
         this.reference = reference;

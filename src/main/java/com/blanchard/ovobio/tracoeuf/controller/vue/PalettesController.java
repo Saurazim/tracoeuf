@@ -10,31 +10,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
+
 @Controller
 public class PalettesController {
     @Autowired
     PaletteMetier pm;
 
-    private static final String URL_PALETTES = "palettes";
-    private static final String URL_SAVE_PALETTES = "save_palettes";
-    private static final String JSP_PALETTES = "1a_palettes";
-    public static final String ATT_FORM = "form";
+    private static final String ATT_RESULTAT = "resultat";
 
-    @PostMapping(URL_PALETTES)
+    @PostMapping(ConstInt.PALETTES_URL)
     public String palettes(@ModelAttribute LivraisonBo bo){
-        return JSP_PALETTES;
+        return ConstInt.PALETTES_JSP;
     }
 
-    @PostMapping(URL_SAVE_PALETTES)
+    @PostMapping(ConstInt.PALETTES_URL_SAVE)
     public String palettesDtos(@ModelAttribute LivraisonForm form){
         pm.savePalettes(form);
         if (pm.getErreurs().isEmpty()){
             Model model = new ConcurrentModel();
-            model.addAttribute("resultat", pm.getResultat());
-            return "redirect:/livraison";
+            model.addAttribute(ATT_RESULTAT, pm.getResultat());
+            return ConstInt.REDIRECT+ConstInt.LIVRAISON_URL;
         }
         Model model = new ConcurrentModel();
-        model.addAttribute(ATT_FORM, pm);
-        return JSP_PALETTES;
+        model.addAttribute(ConstInt.ATT_FORM, pm);
+        return ConstInt.PALETTES_JSP;
     }
 }

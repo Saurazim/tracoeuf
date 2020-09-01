@@ -1,10 +1,11 @@
 package com.blanchard.ovobio.tracoeuf.util;
 
 import com.blanchard.ovobio.tracoeuf.configuration.Configurations;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 
 /**
  * interface pour récupérer les valeurs constantes de constantes.properties
- * @see com.blanchard.ovobio.tracoeuf.constantes.Constantes
+ * @see ConstExt
  */
 public interface ConstantesUtil {
 

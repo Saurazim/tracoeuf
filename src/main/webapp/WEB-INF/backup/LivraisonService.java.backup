@@ -1,7 +1,7 @@
 package com.blanchard.ovobio.tracoeuf.service;
 
 import com.blanchard.ovobio.tracoeuf.bo.TareBo;
-import com.blanchard.ovobio.tracoeuf.constantes.Constantes;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.dao.CategorieDao;
 import com.blanchard.ovobio.tracoeuf.dao.FournisseurDao;
 import com.blanchard.ovobio.tracoeuf.dao.LivraisonDao;

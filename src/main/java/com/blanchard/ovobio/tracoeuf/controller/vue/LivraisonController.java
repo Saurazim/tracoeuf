@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.blanchard.ovobio.tracoeuf.DocxWriter.DocxCreater;
 import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.coordinateur.LivraisonMetier;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonDto;
 import com.blanchard.ovobio.tracoeuf.model.Categorie;
@@ -42,11 +43,11 @@ public class LivraisonController {
     @Autowired
     CategorieService categorieService;
 
-    private static final String URL_LIVRAISON = "livraison";
-    public static final String ATT_FORM = "form";
-    public static final String ATT_DTO = "dto";
-    public static final String ATT_FOURNISSEURS = "fournisseurs";
-    public static final String ATT_CATEGORIES = "categories";
+
+    private static final String ATT_DTO = "dto";
+    private static final String ATT_FOURNISSEURS = "fournisseurs";
+    private static final String ATT_CATEGORIES = "categories";
+    private static final String ATT_BO = "bo";
 
     /**
      * Initialise les attributs récurrents
@@ -54,27 +55,25 @@ public class LivraisonController {
      * @return une hashmap contenant les attributs
      */
     private Map<String, Object> initVue(){
-        //List<Livraison> livraisons = livraisonService.retourListLivraison();
         List<Fournisseur> fournisseurs = fournisseurService.retourListFournisseur();
         List<Categorie> categories = categorieService.retourAllCateg();
 
         Map<String, Object> mapper = new HashMap<>();
-        //mapper.put(ATT_LIVRAISON_LIST, livraisons);
         mapper.put(ATT_FOURNISSEURS, fournisseurs);
         mapper.put(ATT_CATEGORIES, categories);
 
         return mapper;
     }
 
-    @GetMapping(URL_LIVRAISON)
+    @GetMapping(ConstInt.LIVRAISON_URL)
     public String livraisonView(Model model){
         model.addAllAttributes(initVue());
         LivraisonDto dto = new LivraisonDto();
         model.addAttribute(ATT_DTO, dto);
-        return "1_livraison";//ConstantesUtil.getProperty(Constantes.LIVRAISON_JSP);
+        return ConstInt.LIVRAISON_JSP;
     }
 
-    @PostMapping(URL_LIVRAISON)
+    @PostMapping(ConstInt.LIVRAISON_URL)
     public String livraisonPost(@ModelAttribute LivraisonDto dto, Model mm){
         Livraison l = livraisonMetier.saveLivraison(dto);
         if (livraisonMetier.getErreurs().isEmpty()){
@@ -83,13 +82,13 @@ public class LivraisonController {
             LivraisonBo bo = new LivraisonBo();
             bo.setPrefix(ref);
             bo.setId(l.getId());
-            mm.addAttribute("bo",bo);
-            return "forward:/palettes";
+            mm.addAttribute(ATT_BO,bo);
+            return ConstInt.FORWARD+ConstInt.PALETTES_URL;
         } else {
             mm.addAllAttributes(initVue());
             mm.addAttribute(ATT_DTO, dto);
-            mm.addAttribute(ATT_FORM, livraisonMetier);
-            return "1_livraison";
+            mm.addAttribute(ConstInt.ATT_FORM, livraisonMetier);
+            return ConstInt.LIVRAISON_JSP;
         }
 
     }
