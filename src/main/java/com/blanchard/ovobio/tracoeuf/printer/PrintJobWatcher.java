@@ -48,6 +48,6 @@ public class PrintJobWatcher {
             while (!done){
                 wait();
             }
-        } catch (InterruptedException e){}
+        } catch (InterruptedException ignored){}
     }
 }

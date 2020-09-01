@@ -17,27 +17,17 @@ public interface MathsUtil {
      * @throws SubAboveZeroFalseException si résultat négatif
      */
     static Integer subAboveZero(Integer int1, Integer int2) throws SubAboveZeroFalseException{
-        Integer result = int1 - int2;
+        int result = int1 - int2;
         if (result<0){
             throw new SubAboveZeroFalseException();
         }
         return result;
     }
 
-    static Integer subWithCheck(String str1, String str2) throws ChampVideException, IntExpectedException, SubAboveZeroFalseException {
-        Integer resultat = 0;
-        try{
-            Validation.checkInt(str1);
-            Validation.checkInt(str2);
-        }catch (Exception e){
-            throw e;
-        }
-
-        try{
-            resultat = subAboveZero(Integer.parseInt(str1),Integer.parseInt(str2));
-        } catch (SubAboveZeroFalseException e){
-            throw e;
-        }
+    static Integer subWithCheck(String str1, String str2) throws ChampVideException, IntExpectedException, SubAboveZeroFalseException{
+        Validation.checkInt(str1);
+        Validation.checkInt(str2);
+        Integer resultat = subAboveZero(Integer.parseInt(str1), Integer.parseInt(str2));
         return resultat;
     }
 

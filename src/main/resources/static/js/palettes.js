@@ -14,7 +14,7 @@ function getEnfant(id){
 function incIdNum(previousId, nextId, item){
     item.name = item.name.replace(previousId,nextId);
     item.classList.remove("list["+previousId+"]");
-    item.classList.add("List["+nextId+"]");
+    item.classList.add("list["+nextId+"]");
 
 }
 
@@ -57,8 +57,8 @@ function addFields(id){
     document.getElementById("formulaire").appendChild(tr1);
     var enfant = getEnfant(ct);
     enfant.querySelector("td").innerHTML = ct + "<input type=\"hidden\" name=\"list["+ct+"].idColumn\" value=\"" + ct + "\">";
-    var listInput = enfant.querySelectorAll("[class~='list\["+id+"\]']");
-    var listPrevious = document.getElementById(id).querySelectorAll("[class~='list\["+id+"\]']");
+    var listInput = enfant.querySelectorAll("[class*='list\["+id+"\]']");
+    var listPrevious = document.getElementById(id).querySelectorAll("[class*='list\["+id+"\]']");
     for(i=0;i<listInput.length;i++){
         listInput[i].value = listPrevious[i].value;
         incIdNum(id, ct, listInput[i]);

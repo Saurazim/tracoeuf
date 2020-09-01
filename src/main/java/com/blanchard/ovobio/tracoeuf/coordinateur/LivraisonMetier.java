@@ -81,7 +81,7 @@ public class LivraisonMetier {
         // vérifie la valeur fournisseur
         if (ConstInt.FOURNISSEUR_ID_AUTRE.toString().equals(fournisseurId)){
             try{
-                Validation.checkVideString(autre,ConstInt.CHAMP_FOURNISSEUR);
+                Validation.checkValeurVide(autre,ConstInt.CHAMP_FOURNISSEUR);
             }catch (Exception e){
                 erreurs.put(ConstInt.CHAMP_FOURNISSEUR, e.getMessage());
             }
@@ -89,7 +89,7 @@ public class LivraisonMetier {
             label:if (fournisseur == null){
                 fournisseur = new Fournisseur();
                 try{
-                    Validation.checkVideString(autre,ConstInt.CHAMP_FOURNISSEUR);
+                    Validation.checkValeurVide(autre,ConstInt.CHAMP_FOURNISSEUR);
 
                 }catch(ChampVideException cve){
                     erreurs.put(ConstInt.CHAMP_FOURNISSEUR, cve.getMessage());

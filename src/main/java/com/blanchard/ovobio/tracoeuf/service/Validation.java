@@ -1,12 +1,10 @@
 package com.blanchard.ovobio.tracoeuf.service;
 
 import com.blanchard.ovobio.tracoeuf.bo.TareBo;
-import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
 import com.blanchard.ovobio.tracoeuf.exceptions.DateFormatException;
 import com.blanchard.ovobio.tracoeuf.exceptions.IntExpectedException;
-import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import com.blanchard.ovobio.tracoeuf.util.FormUtil;
 
 /**
@@ -14,24 +12,32 @@ import com.blanchard.ovobio.tracoeuf.util.FormUtil;
  */
 public interface Validation {
 
-    static void checkVideString(String valeur, String champ) throws ChampVideException {
+    static void checkValeurVide(String valeur, String champ) throws ChampVideException {
         if (valeur.isBlank())
             throw new ChampVideException(champ);
     }
 
-    static boolean checkPoids(Integer valeur, String champ) throws ChampVideException {
-        if (FormUtil.isNull(valeur)) {
-            throw new ChampVideException(champ);}
-        return true;
+    static void checkValeurVide(String valeur) throws ChampVideException {
+        if (valeur.isBlank())
+            throw new ChampVideException();
+    }
+
+    static void checkValeurVide(Integer valeur, String champ) throws ChampVideException {
+        if (valeur==null) {
+            throw new ChampVideException(champ);
+        }
+    }
+
+    static void checkValeurVide(Integer valeur) throws ChampVideException {
+        if (valeur==null) {
+            throw new ChampVideException();
+        }
     }
 
     static void checkDate(String date, String champDate) throws ChampVideException, DateFormatException {
-        if (FormUtil.isNull(date)){
-            throw new ChampVideException(champDate);
-        } else {
-            if (!date.matches("([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")){
-                throw new DateFormatException();
-            }
+        checkValeurVide(date,champDate);
+        if (!date.matches("([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")){
+            throw new DateFormatException();
         }
     }
 
@@ -96,12 +102,19 @@ public interface Validation {
         return tare;
     }
 
-    static void checkInt(String champ) throws ChampVideException, IntExpectedException {
-        if (FormUtil.isNull(champ) || champ.equals("")) {
-            throw new ChampVideException(champ);
-        }
+    static void checkInt(String valeur) throws ChampVideException, IntExpectedException {
+        checkValeurVide(valeur);
         try{
-            Integer.parseInt(champ);
+            Integer.parseInt(valeur);
+        } catch (Exception e){
+            throw new IntExpectedException();
+        }
+    }
+
+    static void checkInt(String valeur, String champ) throws ChampVideException, IntExpectedException {
+        checkValeurVide(valeur, champ);
+        try{
+            Integer.parseInt(valeur);
         } catch (Exception e){
             throw new IntExpectedException(champ);
         }

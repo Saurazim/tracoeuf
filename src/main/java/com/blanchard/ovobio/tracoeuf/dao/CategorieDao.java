@@ -11,5 +11,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CategorieDao extends JpaRepository<Categorie, Integer> {
-    Categorie findByType(String type);
 }

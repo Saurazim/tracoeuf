@@ -1,13 +1,9 @@
 package com.blanchard.ovobio.tracoeuf.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Min;
-
 import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 /**
  * TODO entity test
@@ -79,7 +75,7 @@ public class Product {
 
     /**
      * fonction toString auto-générée
-     * @return
+     * @return Entity Product in String
      */
     @Override
     public String toString() {

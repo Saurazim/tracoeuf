@@ -18,8 +18,6 @@ import java.util.List;
  * une livraison est liée à une catégorie et un fournisseur
  */
 @Entity
-//@Cacheable
-//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Livraison {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,16 +75,6 @@ public class Livraison {
 
     public void setNetTotal(Integer netTotal) {
         this.netTotal = netTotal;
-    }
-
-    /**
-     * Détermine le net à partir du brut et de la tare
-     * @param brutTotal
-     * @param tare
-     * @throws SubAboveZeroFalseException si résultat négatif
-     */
-    public void setNetTotal(Integer brutTotal, Integer tare) throws SubAboveZeroFalseException {
-        this.netTotal = MathsUtil.subAboveZero(brutTotal, tare);
     }
 
     public List<Palette> getPalettes() {

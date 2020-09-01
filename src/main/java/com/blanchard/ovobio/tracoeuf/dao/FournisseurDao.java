@@ -1,11 +1,10 @@
 package com.blanchard.ovobio.tracoeuf.dao;
 
-import java.util.List;
-
 import com.blanchard.ovobio.tracoeuf.model.Fournisseur;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * DAO Fournisseur
@@ -16,5 +15,4 @@ import org.springframework.stereotype.Repository;
 public interface FournisseurDao extends JpaRepository<Fournisseur, Integer> {
     Fournisseur findByNom(String nom);
     List<Fournisseur> findAllByOrderByIdDesc();
-    List<Fournisseur> findAllByOrderByIdAsc();
 }

@@ -1,9 +1,8 @@
 package com.blanchard.ovobio.tracoeuf.web.servlet;
 
-import com.blanchard.ovobio.tracoeuf.DocxWriter.DocxCreater;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
+import com.blanchard.ovobio.tracoeuf.docxWriter.DocxCreater;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
-
 import com.blanchard.ovobio.tracoeuf.printer.Printer;
 import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;

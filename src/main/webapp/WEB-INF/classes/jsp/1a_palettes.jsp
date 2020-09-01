@@ -29,6 +29,15 @@ pageEncoding="UTF-8"%>-->
                 <th>Actions</th>
             </tr>
             <tbody id="formulaire">
+                <tr class="${resultat!="Echec" ? 'displayNone' : 'reussit'}">
+                    <td></td>
+                    <td><span class="erreur">${erreurs["brut"]}</span></td>
+                    <td><span class="erreur">${erreurs["tare"]}</span></td>
+                    <td><span class="erreur">${erreurs["net"]}</span></td>
+                    <td><span class="erreur">${erreurs["check"]}</span></td>
+                    <td><span class="erreur">${erreurs["comment"]}</span></td>
+                    <td><span class="erreur">${resultat}</span></td>
+                </tr>
                 <tr class="tr" id="0">
                     <td>0<input name="list[0].idColumn" type="hidden" value="0"></td>
                     <td><input type="number" class="list[0] poids" name="list[0].poids"></td>
@@ -42,15 +51,7 @@ pageEncoding="UTF-8"%>-->
                         <button>Valider</button>
                     </td>
                 </tr>
-                <tr class="${empty form.erreurs ? 'displayNone' : ''}">
-                    <td></td>
-                    <td><span class="erreur">${form.erreurs["brut"]}</span></td>
-                    <td><span class="erreur">${form.erreurs["tare"]}</span></td>
-                    <td><span class="erreur">${form.erreurs["net"]}</span></td>
-                    <td><span class="erreur">${form.erreurs["check"]}</span></td>
-                    <td><span class="erreur">${form.erreurs["comment"]}</span></td>
-                    <td><span class="erreur">${form.resultat}</span></td>
-                </tr>
+
             </tbody>
         </table>
     </form>

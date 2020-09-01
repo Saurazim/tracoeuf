@@ -1,5 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.coordinateur;
 
+import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
 import com.blanchard.ovobio.tracoeuf.dto.PaletteDto;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
@@ -14,7 +15,6 @@ import com.blanchard.ovobio.tracoeuf.util.MathsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +49,7 @@ public class PaletteMetier {
 
     public void savePalettes(LivraisonForm form){
         List<Palette> palettes = new ArrayList<>();
-        Livraison l = livraisonService.getById(form.getId()).orElseThrow(EntityNotFoundException::new);
+        Livraison l = livraisonService.getById(form.getId()).orElse(new Livraison());
         int poidsTotal =0;
         for(PaletteDto dto : form.getList()) {
             Palette palette = new Palette();
@@ -58,11 +58,17 @@ public class PaletteMetier {
                 checkPoids(dto.getPoids(),dto.getTare(),dto.getNet());
                 palette.setNet(Integer.parseInt(dto.getNet()));
                 poidsTotal +=palette.getNet();
-            }catch (Exception e){}
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             palette.setCode(form.getPrefix().concat(Integer.toString(dto.getIdColumn())));
 
-            palette.setConforme(dto.isConforme());
+            try {
+                palette.setConforme(dto.isConforme());
+            } catch (NullPointerException npe){
+                palette.setConforme(ConstInt.FALSE);
+            }
             if (!dto.isConforme() && dto.getCommentaires().isBlank()){
                 erreurs.put("comment","Merci de laisser un commentaire");
             }
@@ -71,7 +77,7 @@ public class PaletteMetier {
             palettes.add(palette);
         }
 
-        if (erreurs.isEmpty()){
+        if (!erreurs.isEmpty() || l.getId()!=null){
             resultat = "Succès";
             l.setCompte(form.getList().size());
             l.setNetTotal(poidsTotal);
@@ -98,12 +104,9 @@ public class PaletteMetier {
             } catch (ChampVideException cve){
                 erreurs.put("brut",cve.getMessage());
                 e = cve;
-            } catch (SubAboveZeroFalseException saz){
-                erreurs.put("tare", saz.getMessage());
-                e = saz;
-            } catch (IntExpectedException iee){
-                erreurs.put("tare", iee.getMessage());
-                e = iee;
+            } catch (SubAboveZeroFalseException | IntExpectedException ae) {
+                erreurs.put("tare", ae.getMessage());
+                e = ae;
             }
 
         }

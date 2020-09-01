@@ -1,10 +1,5 @@
 package com.blanchard.ovobio.tracoeuf.controller.vue;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.blanchard.ovobio.tracoeuf.DocxWriter.DocxCreater;
 import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.coordinateur.LivraisonMetier;
@@ -15,16 +10,17 @@ import com.blanchard.ovobio.tracoeuf.model.Livraison;
 import com.blanchard.ovobio.tracoeuf.service.CategorieService;
 import com.blanchard.ovobio.tracoeuf.service.DocumentMetier;
 import com.blanchard.ovobio.tracoeuf.service.FournisseurService;
-import com.blanchard.ovobio.tracoeuf.service.LivraisonService;
 
-import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
-import com.blanchard.ovobio.tracoeuf.util.FormUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * controller de la page '/livraison'
@@ -33,9 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LivraisonController {
     @Autowired
     LivraisonMetier livraisonMetier;
-
-    @Autowired
-    LivraisonService livraisonService;
 
     @Autowired
     FournisseurService fournisseurService;
@@ -91,5 +84,15 @@ public class LivraisonController {
             return ConstInt.LIVRAISON_JSP;
         }
 
+    }
+
+    @PostMapping("/impression")
+    public ResponseEntity impressionDocLivraison(@RequestBody String doc){
+        //impression
+        try {
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

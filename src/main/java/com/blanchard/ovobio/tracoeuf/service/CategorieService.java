@@ -1,13 +1,12 @@
 package com.blanchard.ovobio.tracoeuf.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.blanchard.ovobio.tracoeuf.dao.CategorieDao;
 import com.blanchard.ovobio.tracoeuf.model.Categorie;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * appel des méthodes du DAO
