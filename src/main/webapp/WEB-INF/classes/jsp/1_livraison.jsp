@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>-->
                 <td>
                     <form:input type="number" path="nombrePalette" value="${dto.nombrePalette}" />
                 </td>
-                <td><button>Réception</button></td>
+                <td><button>Réception</button><button type="button" name="impression" onclick="impressionEtiquette()">Imprimer</button></td>
             </tr>
             <tr class="${empty form.resultat ? "hidden" : ""}">
                 <td><span class="erreur">${form.erreurs["date"]}</span></td>

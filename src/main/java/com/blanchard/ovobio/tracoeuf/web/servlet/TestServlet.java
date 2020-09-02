@@ -17,9 +17,9 @@ import java.time.LocalDate;
 
 @Controller
 public class TestServlet {
-//    public static final String ATT_MESSAGES = "messages";
-//    public static final String VUE = "test";
-//    private static final String NOM = "helloworld.pdf";
+    public static final String ATT_MESSAGES = "messages";
+    public static final String VUE = "test";
+    private static final String NOM = "helloworld.pdf";
 
     @Autowired
     TestService test;
