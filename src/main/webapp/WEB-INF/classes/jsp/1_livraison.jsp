@@ -7,9 +7,10 @@ pageEncoding="UTF-8"%>-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/livraisons.css">
-    <script src="<c:url value='/js/livraisons.js'/>"></script>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/livraisons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script src="<c:url value='/js/livraisons.js'/>"></script>
     <title>Réception de livraison</title>
 </head>
 <body onload="toggleSelect()">
@@ -37,7 +38,7 @@ pageEncoding="UTF-8"%>-->
                 <td>
                     <form:input type="number" path="nombrePalette" value="${dto.nombrePalette}" />
                 </td>
-                <td><button>Réception</button><button type="button" name="impression" onclick="impressionEtiquette()">Imprimer</button></td>
+                <td><button id="submit">Réception</button></td>
             </tr>
             <tr class="${empty form.resultat ? "hidden" : ""}">
                 <td><span class="erreur">${form.erreurs["date"]}</span></td>
@@ -48,5 +49,8 @@ pageEncoding="UTF-8"%>-->
             </tr>
         </table>
     </form:form>
+    <input type="file" id="file">
+    <button type="button" id="impression" name="impression" >Imprimer</button>
+    <div id="feedback"></div>
 </body>
-</html>
+</html> 

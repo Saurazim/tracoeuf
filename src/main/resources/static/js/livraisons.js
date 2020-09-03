@@ -1,28 +1,41 @@
-function impressionEtiquette(){
-    var date = document.querySelector("input#date").value,
-    fou = document.querySelector("select#fournisseurId"),
-    fouText = fou.querySelector("option[value='"+fou.value+"']").innerHTML,
-    cat = document.querySelector("select#categorieId"),
-    catText = cat.querySelector("option[value='"+cat.value+"']").innerHTML,
-    code,
-    xhr = new XMLHttpRequest();
+$(document).ready(function() {
+    $("button#impression").click(function(event) {
+        event.preventDefault();
 
-    fouText = setInCode(fouText);
-    code = 'R'+fouText+catText;        
+        essai_impression();
+    })
+})
 
-    //prep de la requete
-    xhr.open('POST',chemin);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send('nomDoc='+nom);
+function essai_impression() {
+    var impr = {},
+        file,
+        chemin="/tracoeuf/impression";
 
-    xhr.addEventListener('readystatechange', function(){
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            alert("C'est fait!");
-        }else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200){
-            alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
-        }
-    });
-    alert(xhr);
+        $("button#impression").prop("disabled", true); 
+        
+        file = $("input#file").val();
+        file = file.replace(/.*[\/\\]/, '');
+        impr["nom"]=file;
+        $('#feedback').html(impr)
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: chemin,
+            data: JSON.stringify(impr),
+            dataType: 'json',
+            cache: false,
+            timeout: 6000,
+            success: function(data) {
+                var json = "<h4>Ajax Response</h4><pre>"
+                + JSON.stringify(data, null, 4) + "</pre>";
+                $('#feedback').html(json);
+                $("button#impression").prop("disabled", false);
+            },
+            error: function(e) {
+                alert("Erreur : "+e.msg)
+                $("button#impression").prop("disabled", false);
+            }
+        });
 }
 
 function setInCode(str){

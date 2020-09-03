@@ -1,8 +1,10 @@
 package com.blanchard.ovobio.tracoeuf.controller.vue;
 
 import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
+import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.coordinateur.LivraisonMetier;
+import com.blanchard.ovobio.tracoeuf.dto.ImprDto;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonDto;
 import com.blanchard.ovobio.tracoeuf.model.Categorie;
 import com.blanchard.ovobio.tracoeuf.model.Fournisseur;
@@ -10,13 +12,15 @@ import com.blanchard.ovobio.tracoeuf.model.Livraison;
 import com.blanchard.ovobio.tracoeuf.service.CategorieService;
 import com.blanchard.ovobio.tracoeuf.service.DocumentMetier;
 import com.blanchard.ovobio.tracoeuf.service.FournisseurService;
-
+import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +31,7 @@ import java.util.Map;
  */
 @Controller
 public class LivraisonController {
+
     @Autowired
     LivraisonMetier livraisonMetier;
 
@@ -36,11 +41,14 @@ public class LivraisonController {
     @Autowired
     CategorieService categorieService;
 
+    private static final String PATH = ConstantesUtil.getProperty(ConstExt.OUTPUT_PATH);
+
 
     private static final String ATT_DTO = "dto";
     private static final String ATT_FOURNISSEURS = "fournisseurs";
     private static final String ATT_CATEGORIES = "categories";
     private static final String ATT_BO = "bo";
+    DocumentMetier documentMetier = new DocumentMetier();
 
     /**
      * Initialise les attributs récurrents
@@ -71,7 +79,7 @@ public class LivraisonController {
         Livraison l = livraisonMetier.saveLivraison(dto);
         if (livraisonMetier.getErreurs().isEmpty()){
             String ref = l.getPrefixCode();
-            new DocumentMetier().impressionEtiquettesPalettes(l,dto.getNombrePalette());
+            documentMetier.impressionEtiquettesPalettes(l, dto.getNombrePalette());
             LivraisonBo bo = new LivraisonBo();
             bo.setPrefix(ref);
             bo.setId(l.getId());
@@ -87,12 +95,16 @@ public class LivraisonController {
     }
 
     @PostMapping("/impression")
-    public ResponseEntity impressionDocLivraison(@RequestBody String doc){
+    public ResponseEntity<?> impressionDocLivraison(@RequestBody ImprDto impr) {
         //impression
         try {
-            return ResponseEntity.ok().build();
+            System.out.println(impr.getNom());
+            //TODO
+            //documentMetier.impressionFichier(PATH+impr.getNom(),1);
+            impr.setMsg("success");
+            return ResponseEntity.ok(impr);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("{\"msg\":\"erreur\"}");
         }
     }
 }

@@ -6,16 +6,25 @@ import com.blanchard.ovobio.tracoeuf.printer.Printer;
 import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
 
 import java.io.File;
+import java.time.LocalDate;
 
 public class DocumentMetier {
     public void impressionEtiquettesPalettes(Livraison l, int nombreCopie) {
-        TemplatePalette tp = new TemplatePalette(l.getPrefixCode(), l.getDate());
-        DocxCreater docCreater = new DocxCreater();
-        String[] map = docCreater.creerEtiquettePalette(tp);
-        if ("reussite".equals(map[0])){
-            File file = new File(map[1]);
-            new Printer().imprimer(file, nombreCopie);
+        //crée le doc à base du template
+        String[] map = creerEtiquettePalette(l.getPrefixCode(), l.getDate());
+        //imprime le doc
+        if ("reussite".equals(map[0])) {
+            impressionFichier(map[1], nombreCopie);
         }
 
+    }
+
+    public void impressionFichier(String nom, int nbCopies) {
+        File file = new File(nom);
+        new Printer().imprimer(file, nbCopies);
+    }
+
+    public String[] creerEtiquettePalette(String prefix, LocalDate date) {
+        return new DocxCreater().creerEtiquettePalette(new TemplatePalette(prefix, date));
     }
 }
