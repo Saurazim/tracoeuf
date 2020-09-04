@@ -9,11 +9,18 @@ pageEncoding="UTF-8"%>-->
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/livraisons.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
-    <script src="<c:url value='/js/livraisons.js'/>"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/menu.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Réception de livraison</title>
 </head>
 <body onload="toggleSelect()">
+    <nav>
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/livraison" class="active">Livraison</a></li>
+            <li><a href="${pageContext.request.contextPath}/palettes">Palettes</a></li>
+        </ul>
+    </nav>
     <form:form method="POST" modelAttribute="dto">
         <table>
             <tr>
@@ -52,5 +59,6 @@ pageEncoding="UTF-8"%>-->
     <input type="file" id="file">
     <button type="button" id="impression" name="impression" >Imprimer</button>
     <div id="feedback"></div>
+    <script src="<c:url value='/js/livraisons.js'/>"></script>
 </body>
-</html> 
+</html>

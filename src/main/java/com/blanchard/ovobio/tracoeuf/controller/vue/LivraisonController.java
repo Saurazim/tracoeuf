@@ -77,20 +77,14 @@ public class LivraisonController {
     @PostMapping(ConstInt.LIVRAISON_URL)
     public String livraisonPost(@ModelAttribute LivraisonDto dto, Model mm){
         Livraison l = livraisonMetier.saveLivraison(dto);
+        mm.addAllAttributes(initVue());
+        mm.addAttribute(ATT_DTO, dto);
+        mm.addAttribute(ConstInt.ATT_FORM, livraisonMetier);
         if (livraisonMetier.getErreurs().isEmpty()){
-            String ref = l.getPrefixCode();
             documentMetier.impressionEtiquettesPalettes(l, dto.getNombrePalette());
-            LivraisonBo bo = new LivraisonBo();
-            bo.setPrefix(ref);
-            bo.setId(l.getId());
-            mm.addAttribute(ATT_BO,bo);
-            return ConstInt.FORWARD+ConstInt.PALETTES_URL;
-        } else {
-            mm.addAllAttributes(initVue());
-            mm.addAttribute(ATT_DTO, dto);
-            mm.addAttribute(ConstInt.ATT_FORM, livraisonMetier);
-            return ConstInt.LIVRAISON_JSP;
         }
+        return ConstInt.LIVRAISON_JSP;
+
 
     }
 
@@ -99,8 +93,8 @@ public class LivraisonController {
         //impression
         try {
             System.out.println(impr.getNom());
-            //TODO
-            //documentMetier.impressionFichier(PATH+impr.getNom(),1);
+
+            documentMetier.impressionFichier(PATH+impr.getNom(),1);
             impr.setMsg("success");
             return ResponseEntity.ok(impr);
         } catch (Exception e) {

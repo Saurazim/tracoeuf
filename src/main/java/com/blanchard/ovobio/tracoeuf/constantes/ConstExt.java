@@ -11,6 +11,9 @@ public interface ConstExt {
 
     String INPUT_PATH = "path.input";
     String OUTPUT_PATH = "path.output";
+    String PATH_OUTPUT_DOCX = "path.output.docx";
+    String PATH_OUTPUT_PDF = "path.output.pdf";
+    String PATH_OUTPUT_FO = "path.output.fo";
 
     String PRINTER_NAME = "printer.name";
 

@@ -30,7 +30,7 @@ public class PrintJobWatcher {
             @Override
             public void printJobNoMoreEvents(PrintJobEvent pje) {
                 allDone();
-                System.out.println("No more events");
+                //System.out.println("No more events");
             }
         }
     );}
@@ -38,7 +38,7 @@ public class PrintJobWatcher {
     private void allDone(){
         synchronized (PrintJobWatcher.this){
             done = true;
-            System.out.println("Printing done");
+            System.out.println("Printing");
             PrintJobWatcher.this.notify();
         }
     }

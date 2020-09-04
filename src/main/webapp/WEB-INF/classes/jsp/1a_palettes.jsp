@@ -10,10 +10,23 @@ pageEncoding="UTF-8"%>-->
     <meta charset="UTF-8">
     <title>Réception de Palettes</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/palettes.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/menu.css">
 </head>
 <body onload="listenersAdding(0)">
+    <nav>
+        <ul class="topbar">
+            <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/livraison">Livraison</a></li>
+            <li><a href="${pageContext.request.contextPath}/palettes" class="active">Palettes</a></li>
+            <li>
+                <select class="livraison" id="livraison">
+                    <option></option>
+                </select>
+            </li>
+        </ul>
+    </nav>
     <form method="POST" action="${pageContext.request.contextPath}/save_palettes" modelAttribute="livraisonForm">
-        <section>
+        <section class="sidebar">
             <p>${bo.prefix}</p>
             <input type="hidden" name="prefix" value="${bo.prefix}">
             <input type="hidden" name="id" value="${bo.id}">

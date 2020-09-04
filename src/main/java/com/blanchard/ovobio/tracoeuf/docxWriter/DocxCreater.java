@@ -18,15 +18,16 @@ import java.util.HashMap;
 public class DocxCreater {
     private static final String INPUT_PATH = ConstantesUtil.getProperty(ConstExt.INPUT_PATH);
     private static final String OUTPUT_PATH = ConstantesUtil.getProperty(ConstExt.OUTPUT_PATH);
+    private static final String DOCX = ConstantesUtil.getProperty(ConstExt.PATH_OUTPUT_DOCX);
     private static final String DOC = "template_palette.docx";
     private static final String REF = "reference";
     private static final String DATE = "date";
-
+    private static final String NOM = "nom";
 
     public String[] creerEtiquettePalette(TemplatePalette tp) {
         //init
         WordprocessingMLPackage wmlPackage = new WordprocessingMLPackage();
-        String nom = OUTPUT_PATH+tp.getNom();
+        String nom = OUTPUT_PATH+DOCX+tp.getNom();
         String issue="echec";
         int ct=0;
         try{
@@ -41,6 +42,7 @@ public class DocxCreater {
         HashMap<String,String> mappings = new HashMap<>();
         mappings.put(REF,tp.getRef());
         mappings.put(DATE,tp.getDate());
+        mappings.put(NOM,tp.getNom());
         //timer
         long start = System.currentTimeMillis();
 
