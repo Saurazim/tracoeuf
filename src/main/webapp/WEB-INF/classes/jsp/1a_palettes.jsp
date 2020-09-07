@@ -6,30 +6,35 @@ pageEncoding="UTF-8"%>-->
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Réception de Palettes</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/palettes.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/sidebar.css">
 </head>
+
 <body onload="listenersAdding(0)">
-    <nav>
-        <ul class="topbar">
+    <nav class="topbar">
+        <ul>
             <li><a href="${pageContext.request.contextPath}/">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/livraison">Livraison</a></li>
             <li><a href="${pageContext.request.contextPath}/palettes" class="active">Palettes</a></li>
-            <li>
-                <select class="livraison" id="livraison">
-                    <option></option>
-                </select>
-            </li>
         </ul>
     </nav>
     <form method="POST" action="${pageContext.request.contextPath}/save_palettes" modelAttribute="livraisonForm">
         <section class="sidebar">
-            <p>${bo.prefix}</p>
-            <input type="hidden" name="prefix" value="${bo.prefix}">
-            <input type="hidden" name="id" value="${bo.id}">
+            <select class="date" id="date" onclick="addOptionsSelect()">
+                <c:forEach items="${dates}" var="date" >
+                    <option value="<c:out value = '${date}'/>"><c:out value = "${date}"/></option>
+                </c:forEach>
+            </select>
+            <select class="livraisonId" id="livraisonId" onclick="putValues()">
+            </select>
+            <p id="prefixVu"><p>
+            <input type="hidden" id="prefix" name="prefix" value="${bo.prefix}">
+            <input type="hidden" id="id" name="id" value="${bo.id}">
         </section>
         <table>
             <tr>
@@ -37,12 +42,12 @@ pageEncoding="UTF-8"%>-->
                 <th>Poids(kg)</th>
                 <th>Tare(kg)</th>
                 <th>Poids Net(kg)</th>
-                <th>Conformité<br/>des critères<br/>de réception</th>
+                <th>Conformité<br />des critères<br />de réception</th>
                 <th>Commentaires</th>
                 <th>Actions</th>
             </tr>
             <tbody id="formulaire">
-                <tr class="${resultat!="Echec" ? 'displayNone' : 'reussit'}">
+                <tr class="${resultat!=" Echec" ? 'displayNone' : 'reussit' }">
                     <td></td>
                     <td><span class="erreur">${erreurs["brut"]}</span></td>
                     <td><span class="erreur">${erreurs["tare"]}</span></td>
@@ -68,6 +73,11 @@ pageEncoding="UTF-8"%>-->
             </tbody>
         </table>
     </form>
+    <script>
+        var livraisons = ${livraisons}
+        var dates = ${dates}
+    </script>
     <script src="<c:url value='js/palettes.js'/>"></script>
 </body>
+
 </html>

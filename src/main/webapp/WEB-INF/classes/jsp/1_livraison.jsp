@@ -14,7 +14,7 @@ pageEncoding="UTF-8"%>-->
     <title>Réception de livraison</title>
 </head>
 <body onload="toggleSelect()">
-    <nav>
+    <nav class="topbar">
         <ul>
             <li><a href="${pageContext.request.contextPath}/">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/livraison" class="active">Livraison</a></li>

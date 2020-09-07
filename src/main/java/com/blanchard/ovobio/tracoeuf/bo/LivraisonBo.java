@@ -1,22 +1,56 @@
 package com.blanchard.ovobio.tracoeuf.bo;
 
 public class LivraisonBo {
+    private int id;
+    private String date;
+    private int fournisseurId;
+    private int categorieId;
+    private Integer netTotal;
     private String prefix;
-    private Integer id;
+    private Integer compte;
 
-    public LivraisonBo(){}
 
-    public LivraisonBo(String prefix, Integer id) {
-        this.prefix = prefix;
+    public LivraisonBo() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "livraisonBo{" +
-                "prefix='" + prefix + '\'' +
-                ", id=" + id +
-                '}';
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getFournisseurId() {
+        return fournisseurId;
+    }
+
+    public void setFournisseurId(int fournisseurId) {
+        this.fournisseurId = fournisseurId;
+    }
+
+    public int getCategorieId() {
+        return categorieId;
+    }
+
+    public void setCategorieId(int categorieId) {
+        this.categorieId = categorieId;
+    }
+
+    public Integer getNetTotal() {
+        return netTotal;
+    }
+
+    public void setNetTotal(Integer netTotal) {
+        this.netTotal = netTotal;
     }
 
     public String getPrefix() {
@@ -27,11 +61,11 @@ public class LivraisonBo {
         this.prefix = prefix;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getCompte() {
+        return compte;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCompte(Integer compte) {
+        this.compte = compte;
     }
 }

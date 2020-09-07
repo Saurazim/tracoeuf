@@ -2,7 +2,7 @@
 
 var ct = 0;
 
-function getEnfant(id){
+function getEnfant(id) {
     return document.getElementById(id);
 }
 
@@ -11,10 +11,10 @@ function getEnfant(id){
  * @param {Number} id 
  * @param {Element} item 
  */
-function incIdNum(previousId, nextId, item){
-    item.name = item.name.replace(previousId,nextId);
-    item.classList.remove("list["+previousId+"]");
-    item.classList.add("list["+nextId+"]");
+function incIdNum(previousId, nextId, item) {
+    item.name = item.name.replace(previousId, nextId);
+    item.classList.remove("list[" + previousId + "]");
+    item.classList.add("list[" + nextId + "]");
 
 }
 
@@ -33,13 +33,21 @@ function delIt(id) {
  * l'id détermine la ligne concernée
  * @param {Number} id
  */
-function listenersAdding(id){
+function listenersAdding(id) {
     var enfant = getEnfant(id)
-    enfant.querySelector(".poids").addEventListener("input", function(){mathsTare(id)});
-    enfant.querySelector(".tare").addEventListener("input", function(){mathsTare(id)});
-    enfant.querySelector(".addFields").addEventListener("click",function(){addFields(id);});
-    if(id!=0){
-        enfant.querySelector(".delFields").addEventListener("click",function(){delIt(id);});
+    enfant.querySelector(".poids").addEventListener("input", function () {
+        mathsTare(id)
+    });
+    enfant.querySelector(".tare").addEventListener("input", function () {
+        mathsTare(id)
+    });
+    enfant.querySelector(".addFields").addEventListener("click", function () {
+        addFields(id);
+    });
+    if (id != 0) {
+        enfant.querySelector(".delFields").addEventListener("click", function () {
+            delIt(id);
+        });
     }
 }
 
@@ -47,29 +55,52 @@ function listenersAdding(id){
  * duplique une ligne du tableau formulaire
  * @param {Number} id numéro de la ligne dupliquée
  */
-function addFields(id){
+function addFields(id) {
     ct++;
 
     var tr1 = document.createElement("tr");
-    tr1.id=ct;
+    tr1.id = ct;
 
     tr1.innerHTML = document.getElementById(id).innerHTML;
     document.getElementById("formulaire").appendChild(tr1);
     var enfant = getEnfant(ct);
-    enfant.querySelector("td").innerHTML = ct + "<input type=\"hidden\" name=\"list["+ct+"].idColumn\" value=\"" + ct + "\">";
-    var listInput = enfant.querySelectorAll("[class*='list\["+id+"\]']");
-    var listPrevious = document.getElementById(id).querySelectorAll("[class*='list\["+id+"\]']");
-    for(i=0;i<listInput.length;i++){
+    enfant.querySelector("td").innerHTML = ct + "<input type=\"hidden\" name=\"list[" + ct + "].idColumn\" value=\"" + ct + "\">";
+    var listInput = enfant.querySelectorAll("[class*='list\[" + id + "\]']");
+    var listPrevious = document.getElementById(id).querySelectorAll("[class*='list\[" + id + "\]']");
+    for (i = 0; i < listInput.length; i++) {
         listInput[i].value = listPrevious[i].value;
         incIdNum(id, ct, listInput[i]);
     }
     listenersAdding(ct);
 }
 
-function mathsTare(id){
+function mathsTare(id) {
     var enfant = getEnfant(id);
     var poids = enfant.querySelector("input.poids").value;
     var tare = enfant.querySelector("input.tare").value;
     var net = enfant.querySelector("input.net");
-    net.value = poids-tare>0 ? poids-tare : "#ERROR";
+    net.value = poids - tare > 0 ? poids - tare : "#ERROR";
+}
+
+function addOptionsSelect() {
+    var dates = document.querySelector('select#date');
+    var date = dates.options[dates.selectedIndex].value;
+    var livraison = document.querySelector('select#livraisonId');
+
+    livraison.options.length = 0;
+    for (index in livraisons) {
+        if (date == livraisons[index].date) {
+            livraison.options[livraison.options.length] = new Option(livraisons[index].prefix, livraisons[index].id);
+        }
+    }
+}
+
+function putValues() {
+    var select = document.querySelector("select#livraisonId"),
+        idLiv = select.options[select.selectedIndex].value,
+        codLiv = select.options[select.selectedIndex].innerHTML;
+
+    document.querySelector("input#id").value = idLiv;
+    document.querySelector("input#prefix").value = codLiv;
+    document.querySelector("p#prefixVu").innerHTML = codLiv;
 }

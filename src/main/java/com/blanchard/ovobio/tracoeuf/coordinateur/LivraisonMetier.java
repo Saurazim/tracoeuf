@@ -1,7 +1,10 @@
 package com.blanchard.ovobio.tracoeuf.coordinateur;
 
+import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
+import com.blanchard.ovobio.tracoeuf.converter.LivraisonConvert;
+import com.blanchard.ovobio.tracoeuf.dto.LivPalDto;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonDto;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
 import com.blanchard.ovobio.tracoeuf.model.Categorie;
@@ -12,13 +15,17 @@ import com.blanchard.ovobio.tracoeuf.service.FournisseurService;
 import com.blanchard.ovobio.tracoeuf.service.LivraisonService;
 import com.blanchard.ovobio.tracoeuf.service.Validation;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -141,5 +148,25 @@ public class LivraisonMetier {
         }
 
         return livraison;
+    }
+
+    public List<LivPalDto> getListLivPal(){
+        List<LivraisonBo> bos = livraisonService.getLivraisonsNonCompletes();
+        List<LivPalDto> dtos = new ArrayList<>();
+        for (LivraisonBo bo : bos){
+            LivPalDto dto = new LivraisonConvert().livPalBTD(bo);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    public List<String> getDates(List<LivPalDto> list){
+        List<String> dates = new ArrayList<>();
+        for (LivPalDto dto : list){
+            int indexDate = dates.indexOf(dto.getDate());
+            if (indexDate < ConstInt.ZERO)
+                dates.add(dto.getDate());
+        }
+        return dates;
     }
 }
