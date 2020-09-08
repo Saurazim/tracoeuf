@@ -1,5 +1,6 @@
 package com.blanchard.ovobio.tracoeuf.service;
 
+import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
 import com.blanchard.ovobio.tracoeuf.docxWriter.DocxCreater;
 import com.blanchard.ovobio.tracoeuf.model.Livraison;
@@ -25,27 +26,26 @@ public class DocumentMetier {
     private static final String extFo = ".fo";
     private static final String DOCX = ConstantesUtil.getProperty(ConstExt.PATH_OUTPUT_DOCX);
     private static final String PDF =ConstantesUtil.getProperty(ConstExt.PATH_OUTPUT_PDF);
-    private static final String FO =ConstantesUtil.getProperty(ConstExt.PATH_OUTPUT_FO);
 
-    public String impressionEtiquettesPalettes(Livraison l, float nombrePalette) {
+
+    public String impressionEtiquettesPalettes(LivraisonBo l) {
         //crée le doc à base du template
-        String[] map = creerEtiquettePalette(l.getPrefixCode(), l.getDate());
+        String[] map = creerEtiquettePalette(l.getPrefix(), l.getDate(), l.getCategorieBo().getType());
         //imprime le doc
         if ("reussite".equals(map[0])) {
-            int nbcopies = round(nombrePalette/2);
-            impressionFichier(map[1], nbcopies);
+            impressionFichier(map[1]);
             System.out.println("printing done");
         }
         return map[0];
     }
 
-    public void impressionFichier(String nom, int nbCopies) {
+    public void impressionFichier(String nom) {
         File file = new File(nom);
-        new Printer().imprimer(file, nbCopies);
+        new Printer().imprimer(file);
     }
 
-    public String[] creerEtiquettePalette(String prefix, LocalDate date) {
-        String[] map = new DocxCreater().creerEtiquettePalette(new TemplatePalette(prefix, date));
+    public String[] creerEtiquettePalette(String prefix, LocalDate date, String categorie) {
+        String[] map = new DocxCreater().creerEtiquettePalette(new TemplatePalette(prefix, date, categorie));
         try {
             String nomPdf = conversionDocxToPdf(map[1], output+PDF);
             map[1] = nomPdf;
@@ -69,7 +69,7 @@ public class DocumentMetier {
         WordprocessingMLPackage wmlp = WordprocessingMLPackage.load(file);
         FileOutputStream os = new FileOutputStream(namePdf);
 
-        foSettings.setFoDumpFile(new File(input+".fo"));
+        foSettings.setFoDumpFile(new File(input+extFo));
         foSettings.setWmlPackage(wmlp);
 
         Docx4J.toFO(foSettings,os,Docx4J.FLAG_EXPORT_PREFER_XSL);

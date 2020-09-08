@@ -8,7 +8,7 @@ import java.util.Properties;
  * class de gestion des constantes présentes dans le fichier constantes.properties
  */
 public class Configurations {
-    private Properties properties =null;
+    private Properties properties;
     private static Configurations instance = null;
 
     /**

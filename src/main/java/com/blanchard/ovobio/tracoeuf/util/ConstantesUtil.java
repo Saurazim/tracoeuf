@@ -7,6 +7,7 @@ import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
  * interface pour récupérer les valeurs constantes de constantes.properties
  * @see ConstExt
  */
+@SuppressWarnings("unused")
 public interface ConstantesUtil {
 
     /**

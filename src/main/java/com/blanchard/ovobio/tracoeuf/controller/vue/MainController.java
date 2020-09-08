@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class MainController {
+    @SuppressWarnings("SameReturnValue")
     @GetMapping(value = {"/", "/index"})
     public String index(Model model, @RequestParam(required = false) String id) {
         String message = "Hello World!";

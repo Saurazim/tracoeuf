@@ -1,21 +1,13 @@
 package com.blanchard.ovobio.tracoeuf.web.servlet;
 
-import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
-import com.blanchard.ovobio.tracoeuf.docxWriter.DocxCreater;
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
-import com.blanchard.ovobio.tracoeuf.printer.Printer;
 import com.blanchard.ovobio.tracoeuf.service.DocumentMetier;
-import com.blanchard.ovobio.tracoeuf.template.TemplatePalette;
-import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 @Controller
@@ -36,12 +28,14 @@ public class TestServlet {
 //        return VUE;
 //    }
 
+    @SuppressWarnings("SameReturnValue")
     @GetMapping("/testdto")
     public String testDto(Model model){
 
         return "test";
     }
 
+    @SuppressWarnings("SameReturnValue")
     @PostMapping("/testdto")
     public String signUp(LivraisonForm livraisonForm, Model model){
 
@@ -51,10 +45,12 @@ public class TestServlet {
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     @GetMapping("/testPdf")
     public String imprimer(Model model) {
         DocumentMetier dm = new DocumentMetier();
-        dm.impressionFichier(ConstantesUtil.getProperty(ConstExt.INPUT_PATH)+"empty.pdf", 7);
+        dm.creerEtiquettePalette("RFFFCCCX",LocalDate.now(),"BIO");
+        //dm.impressionFichier(ConstantesUtil.getProperty(ConstExt.INPUT_PATH)+"empty.pdf", 7);
         //String[] str = dm.creerEtiquettePalette("RFFFCCCX",LocalDate.now());
         //System.out.println(str[0]);
         //dm.conversionDocxToPdf("C:\\Programmes_BLG\\document\\etiquettes\\RELRBIO02020-09-04.docx","C:\\Programmes_BLG\\document\\etiquettes\\pdf\\" );

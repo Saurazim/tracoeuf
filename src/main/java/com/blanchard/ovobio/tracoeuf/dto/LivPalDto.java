@@ -1,7 +1,5 @@
 package com.blanchard.ovobio.tracoeuf.dto;
 
-import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
-
 public class LivPalDto {
     private int id;
     private String date;

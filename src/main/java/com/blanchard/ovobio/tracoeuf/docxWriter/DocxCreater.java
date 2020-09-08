@@ -23,6 +23,7 @@ public class DocxCreater {
     private static final String REF = "reference";
     private static final String DATE = "date";
     private static final String NOM = "nom";
+    private static final String CATEGORIE = "categorie";
 
     public String[] creerEtiquettePalette(TemplatePalette tp) {
         //init
@@ -43,6 +44,7 @@ public class DocxCreater {
         mappings.put(REF,tp.getRef());
         mappings.put(DATE,tp.getDate());
         mappings.put(NOM,tp.getNom());
+        mappings.put(CATEGORIE, tp.getCategorie());
         //timer
         long start = System.currentTimeMillis();
 

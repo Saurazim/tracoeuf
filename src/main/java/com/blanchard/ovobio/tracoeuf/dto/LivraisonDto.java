@@ -12,7 +12,7 @@ public class LivraisonDto {
     private String fournisseurId;
     private String fournisseurAutre;
     private Integer categorieId;
-    private Integer nombrePalette = 1;
+    //private Integer nombrePalette = 1;
 
     public LivraisonDto(){}
 
@@ -46,13 +46,5 @@ public class LivraisonDto {
 
     public void setCategorieId(Integer categorieId) {
         this.categorieId = categorieId;
-    }
-
-    public Integer getNombrePalette() {
-        return nombrePalette;
-    }
-
-    public void setNombrePalette(Integer nombrePalette) {
-        this.nombrePalette = nombrePalette;
     }
 }

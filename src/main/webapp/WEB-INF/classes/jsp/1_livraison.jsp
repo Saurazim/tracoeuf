@@ -27,7 +27,7 @@ pageEncoding="UTF-8"%>-->
                 <th>Date</th>
                 <th>Fournisseur</th>
                 <th>Catégorie</th>
-                <th>Nombre de palette<br/>(estimation)</th>
+                <!--<th>Nombre de palette<br/>(estimation)</th>-->
                 <th></th>
             </tr>
             <tr>
@@ -42,16 +42,16 @@ pageEncoding="UTF-8"%>-->
                 <td>
                     <form:select path="categorieId" items="${categories}" itemValue="id" itemLabel="type" value="${dto.categorieId}" />
                 </td>
-                <td>
+                <%--<td>
                     <form:input type="number" path="nombrePalette" value="${dto.nombrePalette}" />
-                </td>
+                </td>--%>
                 <td><button id="submit">Réception</button></td>
             </tr>
             <tr class="${empty form.resultat ? "hidden" : ""}">
                 <td><span class="erreur">${form.erreurs["date"]}</span></td>
                 <td><span class="erreur">${form.erreurs["fournisseur"]}</span></td>
                 <td><span class="erreur">${form.erreurs["categorie"]}</span></td>
-                <td><span class="erreur">${form.erreurs["nbPalette"]}</span></td>
+                <%--<td><span class="erreur">${form.erreurs["nbPalette"]}</span></td>--%>
                 <td><span class="${empty form.erreurs ? "succes" : "erreur"}">${form.resultat}</span></td>
             </tr>
         </table>

@@ -5,7 +5,6 @@ import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
 import com.blanchard.ovobio.tracoeuf.exceptions.DateFormatException;
 import com.blanchard.ovobio.tracoeuf.exceptions.IntExpectedException;
-import com.blanchard.ovobio.tracoeuf.util.FormUtil;
 
 /**
  * interface de validation des données formulaires

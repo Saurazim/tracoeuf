@@ -41,6 +41,8 @@ public class LivraisonController {
     @Autowired
     CategorieService categorieService;
 
+    DocumentMetier documentMetier = new DocumentMetier();
+
     private static final String PATH = ConstantesUtil.getProperty(ConstExt.OUTPUT_PATH);
 
 
@@ -48,7 +50,6 @@ public class LivraisonController {
     private static final String ATT_FOURNISSEURS = "fournisseurs";
     private static final String ATT_CATEGORIES = "categories";
     private static final String ATT_BO = "bo";
-    DocumentMetier documentMetier = new DocumentMetier();
 
     /**
      * Initialise les attributs récurrents
@@ -66,6 +67,7 @@ public class LivraisonController {
         return mapper;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @GetMapping(ConstInt.LIVRAISON_URL)
     public String livraisonView(Model model){
         model.addAllAttributes(initVue());
@@ -74,14 +76,16 @@ public class LivraisonController {
         return ConstInt.LIVRAISON_JSP;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @PostMapping(ConstInt.LIVRAISON_URL)
     public String livraisonPost(@ModelAttribute LivraisonDto dto, Model mm){
-        Livraison l = livraisonMetier.saveLivraison(dto);
+        LivraisonBo l = livraisonMetier.saveLivraison(dto);
         mm.addAllAttributes(initVue());
         mm.addAttribute(ATT_DTO, dto);
         mm.addAttribute(ConstInt.ATT_FORM, livraisonMetier);
         if (livraisonMetier.getErreurs().isEmpty()){
-            documentMetier.impressionEtiquettesPalettes(l, dto.getNombrePalette());
+            String succes = documentMetier.impressionEtiquettesPalettes(l);
+            mm.addAttribute("succes", succes);
         }
         return ConstInt.LIVRAISON_JSP;
 
@@ -94,7 +98,7 @@ public class LivraisonController {
         try {
             System.out.println(impr.getNom());
 
-            documentMetier.impressionFichier(PATH+impr.getNom(),1);
+            documentMetier.impressionFichier(PATH+impr.getNom());
             impr.setMsg("success");
             return ResponseEntity.ok(impr);
         } catch (Exception e) {

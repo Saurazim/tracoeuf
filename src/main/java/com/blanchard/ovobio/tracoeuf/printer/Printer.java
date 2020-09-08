@@ -14,7 +14,7 @@ public class Printer {
     private static final String OUTPUT = ConstantesUtil.getProperty(ConstExt.OUTPUT_PATH);
     private static final String PRINTER = ConstantesUtil.getProperty(ConstExt.PRINTER_NAME);
 
-    public void imprimer(File file, int nombreCopie) {
+    public void imprimer(File file) {
         PrintService service = PrintUtil.findPrintService(PRINTER);
         System.out.println("Printer found : "+service.getName());
         InputStream in = null;
@@ -31,7 +31,7 @@ public class Printer {
 
 
         PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-        pras.add(new Copies(nombreCopie));
+        pras.add(new Copies(1));
 
         DocPrintJob job = service.createPrintJob();
         PrintJobWatcher pjw = new PrintJobWatcher(job);

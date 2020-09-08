@@ -24,11 +24,10 @@ public interface MathsUtil {
         return result;
     }
 
-    static Integer subWithCheck(String str1, String str2) throws ChampVideException, IntExpectedException, SubAboveZeroFalseException{
+    static void subWithCheck(String str1, String str2) throws ChampVideException, IntExpectedException, SubAboveZeroFalseException{
         Validation.checkInt(str1);
         Validation.checkInt(str2);
-        Integer resultat = subAboveZero(Integer.parseInt(str1), Integer.parseInt(str2));
-        return resultat;
+        subAboveZero(Integer.parseInt(str1), Integer.parseInt(str2));
     }
 
 

@@ -1,8 +1,5 @@
 package com.blanchard.ovobio.tracoeuf.model;
 
-import com.blanchard.ovobio.tracoeuf.exceptions.SubAboveZeroFalseException;
-import com.blanchard.ovobio.tracoeuf.util.MathsUtil;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

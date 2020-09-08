@@ -47,6 +47,7 @@ public class PaletteMetier {
         this.resultat = resultat;
     }
 
+    @SuppressWarnings("Unused")
     public void savePalettes(LivraisonForm form){
         List<Palette> palettes = new ArrayList<>();
         Livraison l = livraisonService.getById(form.getId()).orElse(new Livraison());

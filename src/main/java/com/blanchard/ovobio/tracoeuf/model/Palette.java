@@ -42,8 +42,8 @@ public class Palette {
 
     /**
      * Détermine le net à partir du brut et de la tare
-     * @param brut
-     * @param tarePal
+     * @param brut le brut
+     * @param tarePal la tare
      * @throws SubAboveZeroFalseException si résultat négatif
      */
     public void setNet(Integer brut, Integer tarePal) throws SubAboveZeroFalseException {

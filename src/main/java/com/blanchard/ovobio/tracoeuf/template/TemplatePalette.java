@@ -10,6 +10,7 @@ public class TemplatePalette {
     private String reference;
     private String date;
     private String nom;
+    private String categorie;
 
     private static final String extension = ConstantesUtil.getProperty(ConstExt.EXTENSION_ETIQUETTE_PALETTE);
 
@@ -18,9 +19,10 @@ public class TemplatePalette {
         this.date = date;
     }
 
-    public TemplatePalette(String reference, LocalDate date) {
+    public TemplatePalette(String reference, LocalDate date, String categorie) {
         this.reference = reference;
         this.setDate(date);
+        this.categorie = categorie;
         this.nom=reference+date.toString()+extension;
 
     }
@@ -43,6 +45,14 @@ public class TemplatePalette {
 
     public void setDate(LocalDate date){
         this.date = FormUtil.dateToString(date);
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
 
     public String getNom() {

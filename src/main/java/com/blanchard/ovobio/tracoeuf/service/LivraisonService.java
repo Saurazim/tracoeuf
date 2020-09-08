@@ -51,7 +51,7 @@ public class LivraisonService {
         List<Livraison> livraisons = livraisonDao.findAllByCompteIsNull();
         List<LivraisonBo> bos = new ArrayList<>();
         for (Livraison l : livraisons) {
-            LivraisonBo bo = new LivraisonConvert().livraisonETB(l);
+            LivraisonBo bo = LivraisonConvert.livraisonETB(l);
             bos.add(bo);
         }
 

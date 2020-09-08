@@ -15,8 +15,6 @@ import com.blanchard.ovobio.tracoeuf.service.FournisseurService;
 import com.blanchard.ovobio.tracoeuf.service.LivraisonService;
 import com.blanchard.ovobio.tracoeuf.service.Validation;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -63,7 +61,7 @@ public class LivraisonMetier {
      * @param dto objet contenant les infos du formulaire
      * @return l'objet livraison enregistré
      */
-    public Livraison saveLivraison(LivraisonDto dto){
+    public LivraisonBo saveLivraison(LivraisonDto dto){
         String date = dto.getDate();
         String fournisseurId = dto.getFournisseurId();
         String  autre = dto.getFournisseurAutre();
@@ -147,14 +145,14 @@ public class LivraisonMetier {
             resultat = "Echec";
         }
 
-        return livraison;
+        return LivraisonConvert.livraisonETB(livraison);
     }
 
     public List<LivPalDto> getListLivPal(){
         List<LivraisonBo> bos = livraisonService.getLivraisonsNonCompletes();
         List<LivPalDto> dtos = new ArrayList<>();
         for (LivraisonBo bo : bos){
-            LivPalDto dto = new LivraisonConvert().livPalBTD(bo);
+            LivPalDto dto = LivraisonConvert.livPalBTD(bo);
             dtos.add(dto);
         }
         return dtos;

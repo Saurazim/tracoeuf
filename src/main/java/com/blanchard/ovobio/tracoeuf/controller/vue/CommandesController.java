@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class CommandesController {
+    @SuppressWarnings("SameReturnValue")
     @GetMapping("/commandes")
     public String commandes(){
         return "5_commandes";
