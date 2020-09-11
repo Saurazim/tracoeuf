@@ -1,7 +1,7 @@
 package com.blanchard.ovobio.tracoeuf.web.servlet;
 
 import com.blanchard.ovobio.tracoeuf.dto.LivraisonForm;
-import com.blanchard.ovobio.tracoeuf.service.DocumentMetier;
+import com.blanchard.ovobio.tracoeuf.coordinateur.DocumentMetier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,6 +1,7 @@
 package com.blanchard.ovobio.tracoeuf.converter;
 
 import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
+import com.blanchard.ovobio.tracoeuf.dto.AdminLivDto;
 import com.blanchard.ovobio.tracoeuf.dto.LivPalDto;
 import com.blanchard.ovobio.tracoeuf.model.Livraison;
 
@@ -36,5 +37,18 @@ public interface LivraisonConvert {
         bo.setDate(LocalDate.parse(dto.getDate()));
         bo.setPrefix(dto.getPrefix());
         return bo;
+    }
+
+    static AdminLivDto adminLivBTD(LivraisonBo bo){
+        AdminLivDto dto = new AdminLivDto();
+        dto.setId(bo.getId());
+        dto.setDate(bo.getDate().toString());
+        dto.setFournisseur(bo.getFournisseurBo().getNom());
+        dto.setCategorie(bo.getCategorieBo().getType());
+        dto.setNbPalette(bo.getCompte());
+        dto.setPrefix(bo.getPrefix());
+        dto.setNetTotal(bo.getNetTotal());
+
+        return dto;
     }
 }

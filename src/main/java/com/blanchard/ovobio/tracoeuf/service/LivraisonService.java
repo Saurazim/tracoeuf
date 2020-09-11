@@ -37,15 +37,23 @@ public class LivraisonService {
         return livraisonDao.countAllByDateAndFournisseurAndCategorie(localDate,fournisseur,categorie);
     }
 
-    public List<Livraison> findAll(){
-        return livraisonDao.findAll();
+    public List<LivraisonBo> findAll(){
+        List<Livraison> livraisons = livraisonDao.findAll();
+        List<LivraisonBo> bos = new ArrayList<>();
+        for (Livraison l: livraisons) {
+            LivraisonBo bo = LivraisonConvert.livraisonETB(l);
+            bos.add(bo);
+        }
+        return bos;
     }
 
     public Optional<Livraison> getById(int id) {
         return livraisonDao.findById(id);
     }
 
-    public void save(Livraison l){livraisonDao.save(l);}
+    public void save(Livraison l){
+        livraisonDao.save(l);
+    }
 
     public List<LivraisonBo> getLivraisonsNonCompletes(){
         List<Livraison> livraisons = livraisonDao.findAllByCompteIsNull();

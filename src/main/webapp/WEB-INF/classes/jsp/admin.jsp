@@ -8,6 +8,7 @@ pageEncoding="UTF-8"%>-->
   <head>
     <meta charset="UTF-8">
     <title>Administration</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
   </head>
   <body>
     <nav class="topbar">
@@ -31,6 +32,28 @@ pageEncoding="UTF-8"%>-->
         <th>Référence</th>
         <th>Poids/p</th>
       </tr>
+      <c:forEach items="${livraisons}" var="l">
+        <tr>
+          <td>${l.date}</td>
+          <td>${l.fournisseur}</td>
+          <td>${l.categorie}</td>
+          <td>${l.nbPalette}</td>
+          <td>${l.prefix}</td>
+          <td>${l.netTotal}</td>
+        </tr>
+        <c:forEach items="${palettes}" var="p">
+          <c:if test="${p.livraisonId=l.id}">
+            <tr>
+              <td> - </td>
+              <td> - </td>
+              <td> - </td>
+              <td> - </td>
+              <td>${p.reference}</td>
+              <td>${p.net}</td>
+            </tr>
+          </c:if>
+        </c:forEach>
+      </c:forEach>
       <tr>
         <td>2020-08-20</td>
         <td>Blanchard</td>

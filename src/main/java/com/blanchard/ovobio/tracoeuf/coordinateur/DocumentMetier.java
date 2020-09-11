@@ -1,4 +1,4 @@
-package com.blanchard.ovobio.tracoeuf.service;
+package com.blanchard.ovobio.tracoeuf.coordinateur;
 
 import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstExt;
