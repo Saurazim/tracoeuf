@@ -3,7 +3,6 @@ package com.blanchard.ovobio.tracoeuf.util;
 import com.blanchard.ovobio.tracoeuf.exceptions.ChampVideException;
 import com.blanchard.ovobio.tracoeuf.exceptions.IntExpectedException;
 import com.blanchard.ovobio.tracoeuf.exceptions.SubAboveZeroFalseException;
-import com.blanchard.ovobio.tracoeuf.service.Validation;
 
 /**
  * interface d'expressions et de traitements mathématiques

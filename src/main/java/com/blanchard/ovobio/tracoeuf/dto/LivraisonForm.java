@@ -10,6 +10,7 @@ public class LivraisonForm {
     private List<PaletteDto> list = new ArrayList<>();
     private Integer id;
     private String prefix;
+    private String bon;
 
     public List<PaletteDto> getList() {
         return list;
@@ -33,5 +34,13 @@ public class LivraisonForm {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public String getBon() {
+        return bon;
+    }
+
+    public void setBon(String bon) {
+        this.bon = bon;
     }
 }

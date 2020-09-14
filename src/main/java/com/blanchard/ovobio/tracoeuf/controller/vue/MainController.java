@@ -21,6 +21,7 @@ public class MainController {
         model.addAttribute("essai", essai);
         model.addAttribute("id",messageId);
 
+        System.out.println(this.getClass());
 
         return "index"; //le modèle ici est index
     }

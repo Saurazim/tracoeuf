@@ -10,7 +10,7 @@ import com.blanchard.ovobio.tracoeuf.model.Livraison;
 import com.blanchard.ovobio.tracoeuf.model.Palette;
 import com.blanchard.ovobio.tracoeuf.service.LivraisonService;
 import com.blanchard.ovobio.tracoeuf.service.PaletteService;
-import com.blanchard.ovobio.tracoeuf.service.Validation;
+import com.blanchard.ovobio.tracoeuf.util.Validation;
 import com.blanchard.ovobio.tracoeuf.util.MathsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -78,10 +78,17 @@ public class PaletteMetier {
             palettes.add(palette);
         }
 
+        try{
+            Validation.checkValeurVide(form.getBon());
+        } catch(ChampVideException cve){
+            erreurs.put("bon",cve.getMessage());
+        }
+
         if (!erreurs.isEmpty() || l.getId()!=null){
             resultat = "Succès";
             l.setCompte(form.getList().size());
             l.setNetTotal(poidsTotal);
+            l.setBonLivraison(form.getBon());
             paletteService.saveAll(palettes);
         }else{
             resultat = "Echec";

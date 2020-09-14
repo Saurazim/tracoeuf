@@ -10,7 +10,7 @@ public class LivraisonBo {
     private Integer netTotal;
     private String prefix;
     private Integer compte;
-
+    private String bonLivraison;
 
     public LivraisonBo() {
     }
@@ -69,5 +69,13 @@ public class LivraisonBo {
 
     public void setCompte(Integer compte) {
         this.compte = compte;
+    }
+
+    public String getBonLivraison() {
+        return bonLivraison;
+    }
+
+    public void setBonLivraison(String bonLivraison) {
+        this.bonLivraison = bonLivraison;
     }
 }

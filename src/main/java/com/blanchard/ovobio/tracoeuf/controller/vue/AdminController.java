@@ -14,7 +14,7 @@ public class AdminController {
     @GetMapping("/admin")
     public String getViewAdmin(Model model){
         model.addAttribute("livraisons", alm.getListLivraisons());
-        //TODO get palettes
+        model.addAttribute("palettes", alm.getListPalettes());
         return "admin";
     }
 

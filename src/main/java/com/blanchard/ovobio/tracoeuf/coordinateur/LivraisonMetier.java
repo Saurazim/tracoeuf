@@ -13,7 +13,7 @@ import com.blanchard.ovobio.tracoeuf.model.Livraison;
 import com.blanchard.ovobio.tracoeuf.service.CategorieService;
 import com.blanchard.ovobio.tracoeuf.service.FournisseurService;
 import com.blanchard.ovobio.tracoeuf.service.LivraisonService;
-import com.blanchard.ovobio.tracoeuf.service.Validation;
+import com.blanchard.ovobio.tracoeuf.util.Validation;
 import com.blanchard.ovobio.tracoeuf.util.ConstantesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

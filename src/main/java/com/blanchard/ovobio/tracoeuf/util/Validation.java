@@ -1,4 +1,4 @@
-package com.blanchard.ovobio.tracoeuf.service;
+package com.blanchard.ovobio.tracoeuf.util;
 
 import com.blanchard.ovobio.tracoeuf.bo.TareBo;
 import com.blanchard.ovobio.tracoeuf.constantes.ConstInt;

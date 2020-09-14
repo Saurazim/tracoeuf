@@ -35,6 +35,7 @@ pageEncoding="UTF-8"%>-->
             <p id="prefixVu"><p>
             <input type="hidden" id="prefix" name="prefix" value="${bo.prefix}">
             <input type="hidden" id="id" name="id" value="${bo.id}">
+            <input type="text" id="bon" name="bon" placeholder="Bon de livraison">
         </section>
         <table>
             <tr>

@@ -62,6 +62,7 @@ public class LivraisonController {
         Map<String, Object> mapper = new HashMap<>();
         mapper.put(ATT_FOURNISSEURS, fournisseurs);
         mapper.put(ATT_CATEGORIES, categories);
+        System.out.println(this.getClass());
 
         return mapper;
     }

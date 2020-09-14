@@ -21,6 +21,7 @@ public class TracoeufApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TracoeufApplication.class, args);
+		System.out.println("TracoeufApplication");
 	}
 
 }

@@ -8,6 +8,7 @@ public class AdminLivDto {
     private Integer nbPalette;
     private String prefix;
     private Integer netTotal;
+    private String bonLivraison;
 
     public AdminLivDto(){}
 
@@ -65,5 +66,13 @@ public class AdminLivDto {
 
     public void setNetTotal(Integer netTotal) {
         this.netTotal = netTotal;
+    }
+
+    public String getBonLivraison() {
+        return bonLivraison;
+    }
+
+    public void setBonLivraison(String bonLivraison) {
+        this.bonLivraison = bonLivraison;
     }
 }

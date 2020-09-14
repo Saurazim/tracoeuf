@@ -4,6 +4,7 @@ import com.blanchard.ovobio.tracoeuf.bo.LivraisonBo;
 import com.blanchard.ovobio.tracoeuf.dto.AdminLivDto;
 import com.blanchard.ovobio.tracoeuf.dto.LivPalDto;
 import com.blanchard.ovobio.tracoeuf.model.Livraison;
+import com.blanchard.ovobio.tracoeuf.util.FormUtil;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ public interface LivraisonConvert {
 
     static LivraisonBo livraisonETB(Livraison l){
         LivraisonBo bo = new LivraisonBo();
+
         bo.setId(l.getId());
         bo.setDate(l.getDate());
         bo.setFournisseurBo(FournisseurConvert.fournisseurETB(l.getFournisseur()));
@@ -18,6 +20,7 @@ public interface LivraisonConvert {
         bo.setNetTotal(l.getNetTotal());
         bo.setPrefix(l.getPrefixCode());
         bo.setCompte(l.getCompte());
+        bo.setBonLivraison(l.getBonLivraison());
 
         return bo;
     }
@@ -33,21 +36,25 @@ public interface LivraisonConvert {
 
     static LivraisonBo LivPalDTB(LivPalDto dto){
         LivraisonBo bo = new LivraisonBo();
+
         bo.setId(dto.getId());
         bo.setDate(LocalDate.parse(dto.getDate()));
         bo.setPrefix(dto.getPrefix());
+
         return bo;
     }
 
     static AdminLivDto adminLivBTD(LivraisonBo bo){
         AdminLivDto dto = new AdminLivDto();
+
         dto.setId(bo.getId());
-        dto.setDate(bo.getDate().toString());
+        dto.setDate(FormUtil.dateToString(bo.getDate()));
         dto.setFournisseur(bo.getFournisseurBo().getNom());
         dto.setCategorie(bo.getCategorieBo().getType());
         dto.setNbPalette(bo.getCompte());
         dto.setPrefix(bo.getPrefix());
         dto.setNetTotal(bo.getNetTotal());
+        dto.setBonLivraison(bo.getBonLivraison());
 
         return dto;
     }

@@ -29,6 +29,7 @@ public class Livraison {
     private Integer netTotal;
     private String prefixCode;
     private Integer compte;
+    private String bonLivraison;
     @Transient
     private List<Palette> palettes = new ArrayList<>();
 
@@ -101,5 +102,13 @@ public class Livraison {
 
     public void setCompte(Integer compte) {
         this.compte = compte;
+    }
+
+    public String getBonLivraison() {
+        return bonLivraison;
+    }
+
+    public void setBonLivraison(String bonLivraison) {
+        this.bonLivraison = bonLivraison;
     }
 }
